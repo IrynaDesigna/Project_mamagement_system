@@ -1,9 +1,20 @@
-<!-- <mat-toolbar color="primary"> -->
-  <!-- <header>
-    <h1>{{title}}</h1>
-    <div class="auth">
-      <a mat-flat-button href="/login" class="sing-in-btn">Log In</a>
-      <a mat-flat-button color="accent" href="/signup">Sign up</a>
+<mat-toolbar color="primary" id="header">
+  <header class="container">
+    <div *ngIf="isActive('/welcome')">
+      <h1><span><i class="fa-solid fa-list-check"></i></span> {{title}}</h1>
+      <div class="auth">
+        <a mat-flat-button href="/login" class="sing-in-btn">Log In</a>
+        <a mat-flat-button color="accent" href="/signup">Sign up</a>
+      </div>
     </div>
-  </header> -->
-<!-- </mat-toolbar> -->
+    <div *ngIf="!isActive('/welcome')">
+      <h1>{{title}}</h1>
+      <div class="auth">
+        <a mat-flat-button href="/login" class="sing-in-btn">Log In</a>
+        <a mat-flat-button color="accent" href="/signup">Sign up</a>
+      </div>
+    </div>
+  </header>
+
+</mat-toolbar>
+
