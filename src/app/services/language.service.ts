@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LanguageServiceService {
+export class LanguageService {
   availableLanguages = ['en', 'ua'];
   currentLanguage = new BehaviorSubject<string>('en');
 
