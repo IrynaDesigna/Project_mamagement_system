@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 
 export class HeaderComponent implements OnInit {
   title = 'Project Management List';
+  user = 'Iryna'
+  isChecked: boolean = false;
 
   ngOnInit(): void {}
 
@@ -33,4 +35,15 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
+
+  onCheckboxChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      console.log(target);
+
+    } else {
+      // The input is not checked
+    }
+  }
+
 }
