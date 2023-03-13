@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { LanguageService } from './../../services/language.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -8,4 +8,11 @@ import { Title } from '@angular/platform-browser';
 })
 export class WelcomePageComponent {
   title = 'PlanIt';
+  selectedLanguage: string = 'en';
+
+  constructor(private languageService: LanguageService) {
+    this.languageService.language$.subscribe((language) => {
+      this.selectedLanguage = language;
+    });
+  }
 }

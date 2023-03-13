@@ -1,13 +1,23 @@
-<div class="app-descr container">
+<div class="app-descr container" *ngIf="selectedLanguage === 'en'">
   <h2><span class="logo"><span><i class="fa-solid fa-list-check"></i></span> {{title}}</span> is a Project Management System</h2>
   <div>PlanIt is the ultimate task management app that helps you stay organized and on top of your to-do list. With PlanIt, you can easily create boards and lists to categorize your tasks and manage your projects. Whether you're planning a vacation, organizing your work tasks, or just keeping track of your daily chores, PlanIt makes it easy to stay on top of everything.</div>
   <div>Creating boards and lists with PlanIt is quick and easy. Simply create a board for each project or task, then add lists of tasks within each board. You can easily edit, delete or move tasks between lists.</div>
   <div>With PlanIt, you can finally say goodbye to messy to-do lists and hello to streamlined task management.</div>
-  <mat-card class="sign-up-call">
-    <mat-card-content>
+    <div class="sinup-wrapper">
       <h3>Get work done on time, all the time!</h3>
       <p>Sign up today and start organizing your life!</p>
-      <a mat-flat-button color="accent" href="/signup">Sign up</a>
-    </mat-card-content>
-  </mat-card>
+      <a href="/signup" class="sign-up-call">Sign up</a>
+    </div>
+</div>
+
+<div class="app-descr container" *ngIf="selectedLanguage === 'ru'">
+  <h2><span class="logo"><span><i class="fa-solid fa-list-check"></i></span> {{title}}</span> - это система управления проектами</h2>
+  <div>PlanIt - это приложение для управления задачами, которое помогает организоваться и контролировать ваш список дел. С PlanIt вы можете легко создавать план и списки, чтобы категоризировать свои задачи и управлять своими проектами. Независимо от того, планируете ли вы отпуск, организуете рабочие задачи или просто отслеживаете свои ежедневные дела, PlanIt поможет вам легко справиться со всеми задачами.</div>
+  <div>Создание планов и списков в PlanIt быстро и легко. Просто создайте план для каждого проекта или задачи, затем добавьте списки задач в каждую доску. Вы можете легко редактировать, удалять или перемещать задачи между списками.</div>
+  <div>С помощью PlanIt вы наконец можете попрощаться с беспорядочными списками дел и приветствовать оптимизированное управление задачами.</div>
+    <div class="sinup-wrapper">
+      <h3>Выполняйте работу вовремя, всегда!</h3>
+      <p>Зарегистрируйтесь сегодня и начните организовывать свою жизнь!</p>
+      <a href="/signup" class="sign-up-call">Зарегестрироваться</a>
+    </div>
 </div>
