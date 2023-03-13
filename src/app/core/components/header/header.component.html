@@ -1,32 +1,37 @@
-<mat-toolbar color="primary" id="header">
-  <header class="container">
+<header id="header">
 
-    <h1><a href=""><span><i class="fa-solid fa-list-check"></i></span> {{title}}</a></h1>
+  <h1><a href=""><span><i class="fa-solid fa-list-check"></i></span> {{title}}</a></h1>
 
-    <div>
-      <div id="lang">
-        <input type="radio" name="lang" id="en" checked (change)="onCheckboxChange($event)">
-        <label for="en">en</label>
-        <input type="radio" name="lang" id="ua" (change)="onCheckboxChange($event)">
-        <label for="ua">ua</label>
-      </div>
-      <div *ngIf="isActive('/welcome')">
-        <div class="auth">
-          <a mat-flat-button href="/login" class="sing-in-btn">Log In</a>
-          <a mat-flat-button color="accent" href="/signup">Sign up</a>
-        </div>
-      </div>
-      <div *ngIf="!isActive('/welcome')">
-        <div class="auth">
-          <a mat-flat-button color="primary" href="/edit-profile">Edit Prifile</a>
-          <a mat-flat-button color="accent">Create new board</a>
-          <a mat-flat-button color="primary" href="/welcome">LogOut</a>
-        </div>
+  <div>
+    <div *ngIf="isActive('/welcome')">
+      <div class="auth">
+        <a href="/login" *ngIf="selectedLanguage === 'en'" class="sing-in-btn login-btn">Log In</a>
+        <a href="/login" *ngIf="selectedLanguage === 'ru'" class="sing-in-btn login-btn">Войти</a>
+
+        <a href="/signup" *ngIf="selectedLanguage === 'en'" class="login-btn">Sign up</a>
+        <a href="/signup" *ngIf="selectedLanguage === 'ru'" class="login-btn">Зарегестрироваться</a>
       </div>
     </div>
+    <div *ngIf="!isActive('/welcome')">
+      <div class="auth">
+        <a href="/" *ngIf="selectedLanguage === 'en'" id="create-btn">Create new board</a>
+        <a href="/" *ngIf="selectedLanguage === 'ru'"id="create-btn">Создать новый лист</a>
+
+        <a href="/edit-profile">IrynaDesigna</a>
+
+        <a href="/welcome" *ngIf="selectedLanguage === 'en'">LogOut</a>
+        <a href="/welcome" *ngIf="selectedLanguage === 'ru'">Выйти</a>
+
+      </div>
+    </div>
+    <div id="lang">
+      <input type="radio" name="language" [(ngModel)]="selectedLanguage" value="en" id="en" checked (change)="onCheckboxChange($event)">
+      <label for="en">en</label>
+      <input type="radio" name="language" [(ngModel)]="selectedLanguage" value="ru" id="ru" (change)="onCheckboxChange($event)">
+      <label for="ru">ru</label>
+    </div>
+  </div>
 
 
-  </header>
-
-</mat-toolbar>
+</header>
 

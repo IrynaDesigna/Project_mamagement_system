@@ -1,5 +1,6 @@
-import { Component, OnInit, Renderer2, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { LanguageService } from './../../../services/language.service';
 
 
 @Component({
@@ -12,15 +13,35 @@ export class HeaderComponent implements OnInit {
   title = 'Project Management List';
   user = 'Iryna'
   isChecked: boolean = false;
+  selectedLanguage: string = 'en';
 
-  ngOnInit(): void {}
+  constructor(
+    private router: Router,
+    private languageService: LanguageService
+    ) {}
 
-  constructor(private router: Router, private renderer: Renderer2) {}
+
 
   isActive(route: string) {
     return this.router.url.startsWith(route);
   }
 
+  ngOnInit(): void {
+    this.languageService.language$.subscribe((language) => {
+      this.selectedLanguage = language;
+    });
+  }
+
+  onCheckboxChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.setLanguage(target.value);
+  }
+
+  setLanguage(language: string): void {
+    this.languageService.setLanguage(language);
+  }
+
+  // header scrolling
   @HostListener('window:scroll', ['$event']) onScrollEvent($event: any){
     const el = document.getElementById('header');
     if (window.pageYOffset > 56) {
@@ -35,15 +56,4 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
-
-  onCheckboxChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.checked) {
-      console.log(target);
-
-    } else {
-      // The input is not checked
-    }
-  }
-
 }
