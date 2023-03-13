@@ -1,5 +1,13 @@
-<div class="author-info">
-  Developed by
-  <img src="assets/img/irynadesigna.jpg" alt="IrynaDesigna-img" class="author-img">
-  <a href="https://github.com/IrynaDesigna">IrynaDesigna</a>
-</div>
+<footer>
+  <div class="foo container">
+    <div class="author-info" *ngIf="selectedLanguage === 'en'">
+      Developed by <a href="https://github.com/IrynaDesigna" id="author" target="_blank">IrynaDesigna</a>, 2023
+    </div>
+    <div class="author-info" *ngIf="selectedLanguage === 'ru'">
+      Разработан <a href="https://github.com/IrynaDesigna" id="author" target="_blank">IrynaDesigna</a>, 2023
+    </div>
+    <div class="rs-school">
+      <a href="https://app.rs.school/" target="_blank"><img src="assets/img/logo.svg" alt="logo" id="footer-logo"></a>
+    </div>
+  </div>
+</footer>
