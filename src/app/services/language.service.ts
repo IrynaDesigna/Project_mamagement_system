@@ -5,12 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class LanguageService {
-  availableLanguages = ['en', 'ua'];
-  currentLanguage = new BehaviorSubject<string>('en');
+  private languageSubject = new BehaviorSubject<string>('en');
+  language$ = this.languageSubject.asObservable();
 
-  constructor() { }
-
-  setCurrentLanguage(lang: string) {
-    this.currentLanguage.next(lang);
+  setLanguage(language: string) {
+    this.languageSubject.next(language);
   }
 }
