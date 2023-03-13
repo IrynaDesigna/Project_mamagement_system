@@ -1,0 +1,17 @@
+@import './_variables'
+
+@mixin my-flexbox
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+@mixin btn($color: $green, $hover: $yellow)
+  box-sizing: content-box
+  padding: 10px 15px
+  border-radius: 5px
+  color: #000
+  font-weight: 600
+  background: $color
+  &:hover
+    background: $hover
+
