@@ -1,0 +1,36 @@
+@import './../../sass/_variables'
+@import './../../sass/_mixins'
+
+.board-container
+  list-style: none
+  margin-top: 60px
+
+.board
+  background: #fff
+  width: 60%
+  height: 60px
+  margin: 15px auto
+  border: 2px solid $primary
+  border-radius: 5px
+  &:hover
+    background: $primary
+    transition: background .5s
+    a
+      color: #fff
+  &:active
+    background: $yellow
+    border-color: $yellow
+    transition: background border-color .5s
+    a
+      color: #fff
+  a
+    text-decoration: none
+    color: $primary
+    font-weight: 600
+    display: flex
+    justify-content: center
+    align-items: center
+    cursor: pointer
+    font-size: 24px
+    width: 100%
+    height: 100%

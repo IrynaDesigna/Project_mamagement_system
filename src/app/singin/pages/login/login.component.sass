@@ -1,0 +1,25 @@
+@import './../../../sass/_variables'
+@import './../../../sass/_mixins'
+
+#login-from
+  margin-top: 50px
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  div
+    margin-bottom: 10px
+  input
+    width: 300px
+    height: 35px
+    padding: 10px
+
+.login-submit-btn
+  display: inline-block
+  @include btn
+  margin-top: 15px
+  border: none
+  cursor: pointer
+
+.err
+  color: $pink

@@ -1,0 +1,37 @@
+<form action="" id="login-from" *ngIf="selectedLanguage === 'en'">
+  <div>
+    <label for="login">Login</label><br>
+    <input type="text" id="login">
+    <div class="err">*Such login name is already exists</div>
+  </div>
+  <div>
+    <label for="email">Email</label><br>
+    <input type="email" placeholder="your@mail.com" id="email">
+    <div class="err"></div>
+  </div>
+  <div>
+    <label for="password">Password</label><br>
+    <input type="text" id="password">
+    <div class="err"></div>
+  </div>
+  <button class="login-submit-btn">Login</button>
+</form>
+
+<form action="" id="login-from" *ngIf="selectedLanguage === 'ru'">
+  <div>
+    <label for="login">Имя пользователя</label><br>
+    <input type="text" id="login">
+    <div class="err">*это имя пользователя уже существует</div>
+  </div>
+  <div>
+    <label for="email">Электронный адрес</label><br>
+    <input type="email" placeholder="your@mail.com" id="email">
+    <div class="err"></div>
+  </div>
+  <div>
+    <label for="password">Пароль</label><br>
+    <input type="text" id="password">
+    <div class="err"></div>
+  </div>
+  <button class="login-submit-btn">Войти</button>
+</form>

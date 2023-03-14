@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './main/main-page/main-page.component';
 import { WelcomePageComponent } from './welcome/welcome-page/welcome-page.component';
 import { NotFoundPageComponent } from './core/pages/not-found-page/not-found-page.component';
-import { LoginPageComponent } from './login/pages/login-page/login-page.component';
-import { SignupPageComponent } from './login/pages/signup-page/signup-page.component';
 import { BoardPageComponent } from './board/board-page/board-page.component';
+import { SingupComponent } from './singin/pages/singup/singup.component';
+import { LoginComponent } from './singin/pages/login/login.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'todos', pathMatch: 'full' },
@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'main', component: MainPageComponent },
   { path: 'welcome', component: WelcomePageComponent },
-  { path: 'login', component: LoginPageComponent },
-  { path: 'signup', component: SignupPageComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SingupComponent },
   { path: 'board', component: BoardPageComponent },
   { path: '**', component: NotFoundPageComponent },
 ];

@@ -1,0 +1,21 @@
+<h2 *ngIf="selectedLanguage === 'en'">Create a profile</h2>
+<h2 *ngIf="selectedLanguage === 'ru'">Создать профиль</h2>
+
+<form action="" id="login-from">
+  <div>
+    <label for="login">Login</label><br>
+    <input type="text" id="login">
+    <div class="err">*Such login name is already exists</div>
+  </div>
+  <div>
+    <label for="email">Email</label><br>
+    <input type="email" placeholder="your@mail.com" id="email">
+    <div class="err"></div>
+  </div>
+  <div>
+    <label for="password">Create your password</label><br>
+    <input type="text" id="password">
+    <div class="err"></div>
+  </div>
+  <button class="login-submit-btn">Sign Up</button>
+</form>

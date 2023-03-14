@@ -4,6 +4,8 @@ import { MainPageComponent } from './main-page/main-page.component';
 
 
 
+
+
 @NgModule({
   declarations: [
     MainPageComponent
@@ -12,7 +14,7 @@ import { MainPageComponent } from './main-page/main-page.component';
     MainPageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ]
 })
 export class MainModule { }
