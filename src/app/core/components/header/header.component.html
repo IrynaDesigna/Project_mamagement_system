@@ -3,7 +3,7 @@
   <h1><a href=""><span><i class="fa-solid fa-list-check"></i></span> PlanIt</a></h1>
 
   <div>
-    <div *ngIf="isActive('/welcome')">
+    <div *ngIf="isActive('/welcome') || isActive('/login') || isActive('/signup')">
       <div class="auth">
         <a href="/login" *ngIf="selectedLanguage === 'en'" class="sing-in-btn login-btn">Log In</a>
         <a href="/login" *ngIf="selectedLanguage === 'ru'" class="sing-in-btn login-btn">Войти</a>
@@ -12,7 +12,7 @@
         <a href="/signup" *ngIf="selectedLanguage === 'ru'" class="login-btn">Зарегестрироваться</a>
       </div>
     </div>
-    <div *ngIf="!isActive('/welcome')">
+    <div *ngIf="!isActive('/welcome') && !isActive('/login') && !isActive('/signup')">
       <div class="auth">
         <a href="/" *ngIf="selectedLanguage === 'en'" id="create-btn">Create new board</a>
         <a href="/" *ngIf="selectedLanguage === 'ru'"id="create-btn">Создать новый план</a>
