@@ -1,7 +1,8 @@
-export interface user {
-  _id:	string,
+export interface User {
+  _id?:	string,
   name:	string,
-  login:	string
+  login:	string,
+  password:	string
 }
 
 export interface Board {

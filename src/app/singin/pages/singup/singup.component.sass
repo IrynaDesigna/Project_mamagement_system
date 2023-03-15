@@ -27,3 +27,32 @@ h2
 
 .err
   color: $pink
+  width: 300px
+  display: none
+  &.err-visible
+    display: block
+
+#signed-up
+  display: none
+  position: absolute
+  width: 100%
+  height: 100%
+  background: $yellow
+  top: 0
+  left: 0
+  z-index: 1000
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  h3
+    margin-bottom: 20px
+
+.explore-btn
+  padding: 15px 20px
+  border-radius: 5px
+  background: $primary
+  color: #fff
+  font-weight: 600
+  text-decoration: none
+  &:hover
+    background: $pink

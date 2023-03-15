@@ -1,21 +1,45 @@
 <h2 *ngIf="selectedLanguage === 'en'">Create a profile</h2>
 <h2 *ngIf="selectedLanguage === 'ru'">Создать профиль</h2>
 
-<form action="" id="login-from">
+<form id="login-from" *ngIf="selectedLanguage === 'en'" (submit)="onSubmit(nameField.value, loginField.value, passwordField.value, $event)">
+  <div>
+    <label for="user-name">Name</label><br>
+    <input type="text" id="user-name" #nameField>
+    <div class="err err-visible">*Name can contain just Aa-Zz characters</div>
+  </div>
   <div>
     <label for="login">Login</label><br>
-    <input type="text" id="login">
+    <input type="text" id="login" #loginField>
     <div class="err">*Such login name is already exists</div>
   </div>
   <div>
-    <label for="email">Email</label><br>
-    <input type="email" placeholder="your@mail.com" id="email">
-    <div class="err"></div>
+    <label for="password">Create your password</label><br>
+    <input type="text" id="password" #passwordField>
+    <div class="err">*Password should contain at least 7 characters, with one or more number and special character</div>
+  </div>
+  <button class="login-submit-btn" type="submit">Sign Up</button>
+</form>
+
+<form id="login-from" *ngIf="selectedLanguage === 'ru'" (submit)="onSubmit(nameField.value, loginField.value, passwordField.value, $event)">
+  <div>
+    <label for="user-name">Имя</label><br>
+    <input type="text" id="user-name" #nameField>
+    <div class="err err-visible">*Имя должно содержать только буквы</div>
   </div>
   <div>
-    <label for="password">Create your password</label><br>
-    <input type="text" id="password">
-    <div class="err"></div>
+    <label for="login">Имя пользователя</label><br>
+    <input type="login" id="login" #loginField>
+    <div class="err">*Такой логин уже существует</div>
   </div>
-  <button class="login-submit-btn">Sign Up</button>
+  <div>
+    <label for="password">Создать пароль</label><br>
+    <input type="text" id="password" #passwordField>
+    <div class="err">*Пароль должен состоять не менее чем из 7 символов и содежать хотя бы 1 цуфру и 1 символ</div>
+  </div>
+  <button class="login-submit-btn" type="submit">Sign Up</button>
 </form>
+
+<div id="signed-up">
+  <h3>Welcome to PlanIt!</h3>
+  <a href="/login" class="explore-btn">Explore</a>
+</div>

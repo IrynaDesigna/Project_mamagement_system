@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeModule } from './welcome/welcome.module';
 import { MainModule } from './main/main.module';
 import { SinginModule } from './singin/singin.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SinginModule } from './singin/singin.module';
     BrowserAnimationsModule,
     WelcomeModule,
     MainModule,
-    SinginModule
+    SinginModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
