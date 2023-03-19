@@ -9,6 +9,7 @@ import { WelcomeModule } from './welcome/welcome.module';
 import { MainModule } from './main/main.module';
 import { SinginModule } from './singin/singin.module';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
     SinginModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
