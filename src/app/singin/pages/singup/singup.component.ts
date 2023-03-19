@@ -13,6 +13,8 @@ export class SingupComponent {
   selectedLanguage: string = 'en';
   url: string = '/auth/signup';
   isPasswordValid: boolean = true;
+  isNameValid: boolean = true;
+  isLoginValid: boolean = true;
 
   constructor(
     private languageService: LanguageService,
@@ -45,10 +47,26 @@ export class SingupComponent {
     name = name.toLowerCase();
     login = login.toLowerCase();
 
+    const nameRegex = /^[a-zа-я]{4,}$/i;
+    if (!nameRegex.test(name)) {
+      this.isNameValid = false;
+      throw new Error('The name must consist of only letters and must be at least 4 characters long.');
+    } else {
+      this.isNameValid = true;
+    }
+
+    const loginRegex = /^[a-zа-я0-9]{6,}$/i;
+    if (!loginRegex.test(login)) {
+      this.isLoginValid = false;
+      throw new Error('Login must consist of only letterts and numbers and must be at least 6 characters long.');
+    } else {
+      this.isLoginValid = true;
+    }
+
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
     if (!passwordRegex.test(password)) {
       this.isPasswordValid = false;
-      throw new Error('Password should contain at least 7 characters, with one or more number and special character');
+      throw new Error('The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
     } else {
       this.isPasswordValid = true;
     }
