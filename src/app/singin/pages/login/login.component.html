@@ -1,37 +1,27 @@
-<form action="" id="login-from" *ngIf="selectedLanguage === 'en'">
+<form id="login-from" *ngIf="selectedLanguage === 'en'" (submit)="onSubmit(loginField.value, passwordField.value, $event)">
   <div>
     <label for="login">Login</label><br>
-    <input type="text" id="login">
+    <input type="text" id="login" #loginField>
     <div class="err">*Such login name is already exists</div>
   </div>
   <div>
-    <label for="email">Email</label><br>
-    <input type="email" placeholder="your@mail.com" id="email">
-    <div class="err"></div>
-  </div>
-  <div>
     <label for="password">Password</label><br>
-    <input type="text" id="password">
+    <input type="text" id="password" #passwordField>
     <div class="err"></div>
   </div>
-  <button class="login-submit-btn">Login</button>
+  <button type="submit" class="login-submit-btn">Login</button>
 </form>
 
-<form action="" id="login-from" *ngIf="selectedLanguage === 'ru'">
+<form id="login-from" *ngIf="selectedLanguage === 'ru'" (submit)="onSubmit(loginField.value, passwordField.value, $event)">
   <div>
     <label for="login">Имя пользователя</label><br>
-    <input type="text" id="login">
+    <input type="text" id="login" #loginField>
     <div class="err">*это имя пользователя уже существует</div>
   </div>
   <div>
-    <label for="email">Электронный адрес</label><br>
-    <input type="email" placeholder="your@mail.com" id="email">
-    <div class="err"></div>
-  </div>
-  <div>
     <label for="password">Пароль</label><br>
-    <input type="text" id="password">
+    <input type="text" id="password" #passwordField>
     <div class="err"></div>
   </div>
-  <button class="login-submit-btn">Войти</button>
+  <button type="submit" class="login-submit-btn">Войти</button>
 </form>

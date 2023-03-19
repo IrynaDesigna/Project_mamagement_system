@@ -1,7 +1,7 @@
 <h2 *ngIf="selectedLanguage === 'en'">Create a profile</h2>
 <h2 *ngIf="selectedLanguage === 'ru'">Создать профиль</h2>
 
-<form id="login-from" *ngIf="selectedLanguage === 'en'" (submit)="onSubmit(nameField.value, loginField.value, passwordField.value, $event)">
+<form id="login-from" *ngIf="selectedLanguage === 'en'" (submit)="onSubmit(nameField.value, loginField.value, passwordField.value, $event, next)">
   <div>
     <label for="user-name">Name</label><br>
     <input type="text" id="user-name" #nameField>
@@ -15,12 +15,12 @@
   <div>
     <label for="password">Create your password</label><br>
     <input type="text" id="password" #passwordField>
-    <div class="err">*Password should contain at least 7 characters, with one or more number and special character</div>
+    <div class="err" [ngClass]="{'err-visible': !isPasswordValid}">*Password should contain at least 7 characters, with one or more number and special character</div>
   </div>
   <button class="login-submit-btn" type="submit">Sign Up</button>
 </form>
 
-<form id="login-from" *ngIf="selectedLanguage === 'ru'" (submit)="onSubmit(nameField.value, loginField.value, passwordField.value, $event)">
+<form id="login-from" *ngIf="selectedLanguage === 'ru'" (submit)="onSubmit(nameField.value, loginField.value, passwordField.value, $event, next)">
   <div>
     <label for="user-name">Имя</label><br>
     <input type="text" id="user-name" #nameField>
@@ -39,7 +39,7 @@
   <button class="login-submit-btn" type="submit">Sign Up</button>
 </form>
 
-<div id="signed-up">
+<div id="signed-up" #next>
   <h3>Welcome to PlanIt!</h3>
   <a href="/login" class="explore-btn">Explore</a>
 </div>

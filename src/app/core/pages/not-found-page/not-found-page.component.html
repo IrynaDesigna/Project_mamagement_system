@@ -1,1 +1,4 @@
-<p>not-found-page works!</p>
+<div class="error-wrapper">
+  <h1 *ngIf="selectedLanguage === 'en'">Page is not found!</h1>
+  <h1 *ngIf="selectedLanguage === 'ru'">Страница не найдена!</h1>
+</div>

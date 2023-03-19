@@ -24,6 +24,11 @@ a
   color: #fff
   text-decoration: none
 
+.logout-btn
+  color: #fff
+  &:hover
+    color: #000
+
 #header.scroll
   background: $pink
   position: fixed
@@ -45,10 +50,12 @@ a
 
 .auth
   a:nth-child(2),
-  a:nth-child(3)
+  a:nth-child(3),
+  .logout-btn
     margin-left: 10px
     &:hover
       color: #000
+      cursor: pointer
 
 #lang
   margin-left: 15px
