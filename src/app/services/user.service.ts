@@ -7,12 +7,17 @@ import { User } from '../core/models/app.model';
   providedIn: 'root'
 })
 export class UserService {
-  private readonly baseUrl = 'http://localhost:3000/';
+  localStorage = window.localStorage;
 
   constructor(private httpService: HttpServiceService,) {}
 
   createUser(user: User): Observable<any> {
     const url = `/auth/signup`;
     return this.httpService.post(url, user);
+  }
+
+  getUsers(): Observable<any> {
+    const url = `/users`;
+    return this.httpService.get(url);
   }
 }

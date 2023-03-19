@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../core/models/app.model';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -19,6 +20,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private userService: UserService,
     ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser') || '{}')
@@ -44,7 +46,16 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/signin`, body)
       .pipe(
         tap((user: User) => {
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.userService.getUsers().subscribe({
+            next: (response) => {
+              const currentUser = response.find((user: User) => user.login === login);
+              localStorage.setItem('userId', currentUser._id);
+            },
+            error: (error) => { console.log(error); },
+            complete: () => { console.log('Observable completed') }
+          });
+
+          if (user.token) { localStorage.setItem('token', user.token) };
           localStorage.setItem('userLogin', login);
           this.currentUserSubject.next(user);
           this.setIsLoggedIn(true);
@@ -63,8 +74,6 @@ export class AuthService {
     this.currentUserSubject.next(defaultUser);
     this.router.navigateByUrl('/welcome');
     this.setIsLoggedIn(false);
-    console.log(this.isLoggedIn);
-
   }
 
   setIsLoggedIn(status: boolean) {

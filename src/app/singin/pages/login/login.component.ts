@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { LanguageService } from '../../../services/language.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +12,10 @@ export class LoginComponent {
   title = 'PlanIt';
   selectedLanguage: string = 'en';
   url: string = '/auth/signin';
+  localStorage = window.localStorage;
 
   constructor(
     private languageService: LanguageService,
-    private httpService: HttpServiceService,
     private authService: AuthService,
     private router: Router,
     ) {
@@ -30,12 +29,10 @@ export class LoginComponent {
 
     this.authService.login(login, password).subscribe({
       next: (response) => {
-        console.log(response);
         this.router.navigate(['/main']);
       },
       error: (error) => {
         console.log(error);
-        // handle error here
       },
       complete: () => {
         console.log('Observable completed');
