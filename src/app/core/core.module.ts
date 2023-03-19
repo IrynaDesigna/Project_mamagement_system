@@ -4,13 +4,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { FormsModule } from '@angular/forms';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    EditProfileComponent
   ],
   exports: [
     HeaderComponent,

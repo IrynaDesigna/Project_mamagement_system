@@ -6,18 +6,19 @@ import { NotFoundPageComponent } from './core/pages/not-found-page/not-found-pag
 import { BoardPageComponent } from './board/board-page/board-page.component';
 import { SingupComponent } from './singin/pages/singup/singup.component';
 import { LoginComponent } from './singin/pages/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'todos', pathMatch: 'full' },
   // { path: 'todos', loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule) },
 
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-  { path: 'main', component: MainPageComponent },
+  { path: 'main', component: MainPageComponent,canActivate: [AuthGuard] },
   { path: 'welcome', component: WelcomePageComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SingupComponent },
-  { path: 'board', component: BoardPageComponent },
-  { path: '**', component: NotFoundPageComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'signup', component: SingupComponent, canActivate: [AuthGuard] },
+  { path: 'board', component: BoardPageComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundPageComponent, canActivate: [AuthGuard] },
 ];
 
 

@@ -7,7 +7,7 @@ import { User } from '../core/models/app.model';
   providedIn: 'root'
 })
 export class UserService {
-  private readonly baseUrl = 'http://localhost:3000/auth';
+  private readonly baseUrl = 'http://localhost:3000/';
 
   constructor(private httpService: HttpServiceService,) {}
 
