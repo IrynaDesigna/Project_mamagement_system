@@ -2,6 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LanguageService } from '../../../services/language.service';
 import { UserService } from 'src/app/services/user.service';
+import { InputValidationService } from 'src/app/services/input-validation.service';
 
 @Component({
   selector: 'app-singup',
@@ -12,15 +13,13 @@ export class SingupComponent {
   title = 'PlanIt';
   selectedLanguage: string = 'en';
   url: string = '/auth/signup';
-  isPasswordValid: boolean = true;
-  isNameValid: boolean = true;
-  isLoginValid: boolean = true;
 
   constructor(
     private languageService: LanguageService,
     private router: Router,
     private renderer: Renderer2,
     private userService: UserService,
+    public inputValidationService: InputValidationService,
     ) {
     this.languageService.language$.subscribe((language) => {
       this.selectedLanguage = language;
@@ -44,33 +43,13 @@ export class SingupComponent {
   onSubmit(name: string, login: string, password: string, event: Event, next: HTMLElement) {
     event.preventDefault();
 
-    name = name.toLowerCase();
-    login = login.toLowerCase();
+    name = name.toLowerCase().trim();
+    login = login.toLowerCase().trim();
+    password = password.trim();
 
-    const nameRegex = /^[a-zа-я]{4,}$/i;
-    if (!nameRegex.test(name)) {
-      this.isNameValid = false;
-      throw new Error('The name must consist of only letters and must be at least 4 characters long.');
-    } else {
-      this.isNameValid = true;
-    }
-
-    const loginRegex = /^[a-zа-я0-9]{6,}$/i;
-    if (!loginRegex.test(login)) {
-      this.isLoginValid = false;
-      throw new Error('Login must consist of only letterts and numbers and must be at least 6 characters long.');
-    } else {
-      this.isLoginValid = true;
-    }
-
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
-    if (!passwordRegex.test(password)) {
-      this.isPasswordValid = false;
-      throw new Error('The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
-    } else {
-      this.isPasswordValid = true;
-    }
-
+    this.inputValidationService.nameValidation(name);
+    this.inputValidationService.loginValidation(login);
+    this.inputValidationService.passwordValidation(password);
 
     const body = {
       name: name,

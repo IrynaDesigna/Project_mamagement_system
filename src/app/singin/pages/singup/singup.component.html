@@ -5,17 +5,17 @@
   <div>
     <label for="user-name">Name</label><br>
     <input type="text" id="user-name" #nameField>
-    <div class="err" [ngClass]="{'err-visible': !isNameValid}">*The name must consist of only letters and must be at least 4 characters long.</div>
+    <div class="err" [ngClass]="{'err-visible': !inputValidationService.isNameValid}">*The name must consist of only letters and must be at least 4 characters long.</div>
   </div>
   <div>
     <label for="login">Login</label><br>
     <input type="text" id="login" #loginField>
-    <div class="err" [ngClass]="{'err-visible': !isLoginValid}">*Login must consist of only letterts and numbers and must be at least 6 characters long.</div>
+    <div class="err" [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">*Login must consist of only letterts and numbers and must be at least 6 characters long.</div>
   </div>
   <div>
     <label for="password">Create your password</label><br>
     <input type="text" id="password" #passwordField>
-    <div class="err" [ngClass]="{'err-visible': !isPasswordValid}">*The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.</div>
+    <div class="err" [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">*The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.</div>
   </div>
   <button class="login-submit-btn" type="submit">Sign Up</button>
 </form>
@@ -24,17 +24,17 @@
   <div>
     <label for="user-name">Имя</label><br>
     <input type="text" id="user-name" #nameField>
-    <div class="err" [ngClass]="{'err-visible': !isNameValid}">*Имя должно содержать только буквы и должно состоять как минимум из 4х букв.</div>
+    <div class="err" [ngClass]="{'err-visible': !inputValidationService.isNameValid}">*Имя должно содержать только буквы и должно состоять как минимум из 4х букв.</div>
   </div>
   <div>
     <label for="login">Имя пользователя</label><br>
     <input type="login" id="login" #loginField>
-    <div class="err"  [ngClass]="{'err-visible': !isLoginValid}">*Имя должно содержать только буквы и цыфры, и должно состоять как минимум из 6ти символов.</div>
+    <div class="err"  [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">*Имя должно содержать только буквы и цыфры, и должно состоять как минимум из 6ти символов.</div>
   </div>
   <div>
     <label for="password">Создать пароль</label><br>
     <input type="text" id="password" #passwordField>
-    <div class="err" [ngClass]="{'err-visible': !isPasswordValid}">*Пароль должен содержать как минимум 7 символов, с одной или более цифрами и специальными символами, а также как минимум одну строчную букву и одну заглавную букву.</div>
+    <div class="err" [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">*Пароль должен содержать как минимум 7 символов, с одной или более цифрами и специальными символами, а также как минимум одну строчную букву и одну заглавную букву.</div>
   </div>
   <button class="login-submit-btn" type="submit">Sign Up</button>
 </form>

@@ -1,0 +1,43 @@
+@import './../../../sass/_variables'
+@import './../../../sass/_mixins'
+
+h2
+  color: $primary
+  font-size: 36px
+  margin: 50px 0
+  text-align: center
+
+h3
+  text-align: center
+  margin-bottom: 15px
+
+form
+  @include my-flexbox
+  flex-direction: column
+
+input
+  padding: 10px 15px
+  border-radius: 5px
+  margin: 0 0 10px 0
+  @include my-flexbox
+  justify-content: flex-start
+  flex-direction: column
+
+.reset-btn,
+.delete-btn
+  border: none
+  margin: 10px 0
+
+.err
+  color: $primary
+  display: none
+  margin: 0 15px 15px
+
+.err-visible
+  display: block
+
+.reset-btn
+  @include btn($yellow, $green)
+
+.delete-btn
+  @include btn(red, $yellow)

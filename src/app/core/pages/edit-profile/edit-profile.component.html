@@ -1,1 +1,30 @@
-<p>edit-profile works!</p>
+<h2>Hello, <span>{{ localStorage.getItem('userLogin') }}</span>!</h2>
+
+<h3>Edit profile</h3>
+
+<!-- <form> -->
+  <!-- loginField.value,  -->
+  <!-- <div>
+    <label for="login">Change login</label>
+    <input type="text" id="login" #loginField>
+  </div>
+  <div class="err" [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">*Login must consist of only letterts and numbers and must be at least 6 characters long.</div>
+</form> -->
+
+<form (submit)="onUserReset(passwordField.value)" >
+
+
+
+  <div>
+    <label for="password">Reset the password</label>
+    <input type="password" id="password" #passwordField>
+  </div>
+  <div class="err" [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">*The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.</div>
+  <button type="submit" class="reset-btn">Reset</button>
+  <div class="err">*user is already exists</div>
+
+</form>
+
+<app-popup [popupText]="popupText"></app-popup>
+
+<button class="delete-btn">Delete profile</button>
