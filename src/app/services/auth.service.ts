@@ -50,6 +50,7 @@ export class AuthService {
             next: (response) => {
               const currentUser = response.find((user: User) => user.login === login);
               localStorage.setItem('userId', currentUser._id);
+              localStorage.setItem('userName', currentUser.name);
             },
             error: (error) => { console.log(error); },
             complete: () => { console.log('Observable completed') }

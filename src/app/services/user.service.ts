@@ -7,7 +7,7 @@ import { User } from '../core/models/app.model';
   providedIn: 'root'
 })
 export class UserService {
-  localStorage = window.localStorage;
+  // localStorage = window.localStorage;
 
   constructor(private httpService: HttpServiceService,) {}
 
@@ -19,5 +19,10 @@ export class UserService {
   getUsers(): Observable<any> {
     const url = `/users`;
     return this.httpService.get(url);
+  }
+
+  resetUser(user: User): Observable<any> {
+    const url = `/users/${localStorage.getItem('userId')}`;
+    return this.httpService.put(url, user)
   }
 }
