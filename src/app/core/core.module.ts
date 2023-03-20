@@ -5,18 +5,21 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { FormsModule } from '@angular/forms';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { PopupComponent } from './components/popup/popup.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
+    PopupComponent,
     NotFoundPageComponent,
     EditProfileComponent
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,
