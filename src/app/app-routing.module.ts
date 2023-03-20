@@ -7,6 +7,7 @@ import { BoardPageComponent } from './board/board-page/board-page.component';
 import { SingupComponent } from './singin/pages/singup/singup.component';
 import { LoginComponent } from './singin/pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { EditProfileComponent } from './core/pages/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'todos', pathMatch: 'full' },
@@ -18,7 +19,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SingupComponent },
   { path: 'board', component: BoardPageComponent, canActivate: [AuthGuard] },
+  { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundPageComponent, canActivate: [AuthGuard] },
+
 ];
 
 
