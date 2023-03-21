@@ -1,7 +1,14 @@
+export interface DecodedToken {
+  id: string;
+  login: string;
+  iat: number;
+  exp: number;
+}
+
 export interface User {
   name:	string,
   login:	string,
-  password:	string,
+  password?:	string,
   token?: string,
   id?: string
 }

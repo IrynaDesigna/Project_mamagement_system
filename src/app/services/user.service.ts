@@ -21,8 +21,18 @@ export class UserService {
     return this.httpService.get(url);
   }
 
-  resetUser(user: User): Observable<any> {
-    const url = `/users/${localStorage.getItem('userId')}`;
+  getUser(userId: string): Observable<any> {
+    const url = `/users/${userId}`;
+    return this.httpService.get(url);
+  }
+
+  resetUser(userId: string, user: User): Observable<any> {
+    const url = `/users/${userId}`;
     return this.httpService.put(url, user)
+  }
+
+  deleteUser(userId: string, user: User): Observable<any> {
+    const url = `/users/${userId}`;
+    return this.httpService.delete(url, user)
   }
 }

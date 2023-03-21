@@ -29,13 +29,15 @@ export class LoginComponent {
 
     this.authService.login(login, password).subscribe({
       next: (response) => {
+        console.log(response);
+
         this.router.navigate(['/main']);
       },
       error: (error) => {
         console.log(error);
       },
       complete: () => {
-        console.log('Observable completed');
+        console.log('User log in');
       }
     });
   }

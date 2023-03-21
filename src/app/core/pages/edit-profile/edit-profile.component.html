@@ -2,29 +2,30 @@
 
 <h3>Edit profile</h3>
 
-<!-- <form> -->
-  <!-- loginField.value,  -->
-  <!-- <div>
+<form (submit)="onChangeLogin(loginField.value)">
+  <div>
     <label for="login">Change login</label>
     <input type="text" id="login" #loginField>
   </div>
+  <button type="submit" class="reset-btn">Change login</button>
+  <div>
+
+  </div>
   <div class="err" [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">*Login must consist of only letterts and numbers and must be at least 6 characters long.</div>
-</form> -->
+</form>
 
-<form (submit)="onUserReset(passwordField.value)" >
-
-
-
+<form (submit)="onUserReset(passwordField.value)">
   <div>
     <label for="password">Reset the password</label>
-    <input type="password" id="password" #passwordField>
+    <input type="password" id="password" #passwordField autocomplete="">
   </div>
   <div class="err" [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">*The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.</div>
   <button type="submit" class="reset-btn">Reset</button>
-  <div class="err">*user is already exists</div>
-
 </form>
 
-<app-popup [popupText]="popupText"></app-popup>
+<app-popup *ngIf="shouldShowPopup && !shouldClosePopup" [popupText]="popupText" (closePopup)="onPopupClose()"></app-popup>
 
-<button class="delete-btn">Delete profile</button>
+<div style="text-align: center;">
+  <button class="delete-btn" (click)="onUserDelete($event)">Delete profile</button>
+</div>
+

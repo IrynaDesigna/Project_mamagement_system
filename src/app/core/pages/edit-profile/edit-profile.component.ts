@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { InputValidationService } from 'src/app/services/input-validation.service';
-import { User } from '../../models/app.model';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,53 +13,103 @@ import { User } from '../../models/app.model';
 export class EditProfileComponent {
   localStorage = window.localStorage;
   popupText!: string;
-
+  shouldClosePopup = false;
+  shouldShowPopup = false;
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
+    private cookieService: CookieService,
     public inputValidationService: InputValidationService,
   ){}
 
+  onPopupClose() {
+    this.shouldClosePopup = true;
+  }
+
   onChangeLogin(userLogin: string) {
-    console.log('clicked');
-    const name: string = this.localStorage.getItem('userName') ?? '';
     userLogin = userLogin.toLocaleLowerCase().trim();
     this.inputValidationService.loginValidation(userLogin);
 
-    const body = {
-      name: name,
-      login: userLogin,
-      // password: password
-    }
+    const userId: string = this.cookieService.get("userId");
 
+    this.userService.getUser(userId).subscribe({
+      next: (res) => {
+        res.name
+        const body = {
+          name: res.name,
+          login: userLogin,
+          password: this.localStorage.getItem('checkingValue') ?? ''
+        }
+        this.userService.resetUser(userId, body).subscribe({
+          next: (Response) => {
+            console.log(Response);
 
+          },
+          error: (error) => {
+            console.log(error);
+          },
+          complete: () => {
+            this.popupText = "Your login is updated!";
+            this.localStorage.setItem("userLogin", userLogin);
+            this.shouldShowPopup = true;
+          }
+        })
+      },
+      error: (err) => {console.log(err);}
+    })
   }
 
   onUserReset(password: string) {
-    const name: string = this.localStorage.getItem('userName') ?? '';
-    const login: string = this.localStorage.getItem('userLogin') ?? '';
+    const userId: string = this.cookieService.get("userId");
     password = password.trim();
     this.inputValidationService.passwordValidation(password);
 
-    const body = {
-      name: name,
-      login: login,
-      password: password
-    }
+    this.userService.getUser(userId).subscribe({
+      next: (res) => {
+        const body = {
+          name: res.name,
+          login: res.login,
+          password: password
+        }
 
-    this.userService.resetUser(body).subscribe({
-      next: (Response) => {
-        this.localStorage.setItem('userLogin', name);
+        this.userService.resetUser(userId, body).subscribe({
+          next: (Response) => { console.log(Response); },
+          error: (error) => { console.log(error); },
+          complete: () => {
+            this.popupText = "Your password is updated!";
+            this.shouldShowPopup = true;
+            this.localStorage.setItem("checkingValue", password);
+          }
+        })
       },
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        this.popupText = "Your password is updated!";
-        console.log('Observable completed');
-      }
+      error: (err) => {console.log(err);}
     })
+  }
 
+  onUserDelete(event: Event) {
+    const userId: string = this.cookieService.get("userId");
+
+    this.userService.getUser(userId).subscribe({
+      next: (res) => {
+        const body = {
+          id: userId,
+          name: res.name,
+          login: res.login
+        }
+
+        this.userService.deleteUser(userId, body).subscribe({
+          next: (Response) => { console.log(Response); },
+          error: (error) => { console.log(error); },
+          complete: () => {
+            this.popupText = "Your password is updated!";
+            this.shouldShowPopup = true;
+            this.authService.logout();
+          }
+        })
+      },
+      error: (err) => {console.log(err);}
+    })
   }
 
 }
