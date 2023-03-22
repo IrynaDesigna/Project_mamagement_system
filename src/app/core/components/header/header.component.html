@@ -20,7 +20,7 @@
         <a href="/" *ngIf="selectedLanguage === 'en'" id="create-btn">Create new board</a>
         <a href="/" *ngIf="selectedLanguage === 'ru'"id="create-btn">Создать новый план</a>
 
-        <a href="/edit-profile" *ngIf="localStorage.getItem('userLogin')">{{ localStorage.getItem('userLogin') }}</a>
+        <a href="/edit-profile" *ngIf="localStorage.getItem('userLogin')" id="user-login">{{ localStorage.getItem('userLogin') }}</a>
 
         <div *ngIf="selectedLanguage === 'en'" (click)="logout()" class="logout-btn">LogOut</div>
         <div *ngIf="selectedLanguage === 'ru'" (click)="logout()" class="logout-btn">Выйти</div>
