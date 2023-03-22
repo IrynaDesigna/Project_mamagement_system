@@ -79,7 +79,7 @@ export class SingupComponent {
     }
     catch(e: any) {
         if (this.selectedLanguage === 'en') { this.passwordErr = `*${e.message}`; }
-        else { this.passwordErr = '*Логин может содержать только буквы и цыфры, и должен состоять как минимум из 5ти символов.'};
+        else { this.passwordErr = '*Пароль должен быть длиной не менее 7 символов и содержать как минимум одну строчную букву, одну заглавную букву, одну цифру и один специальный символ.'};
     }
 
 
