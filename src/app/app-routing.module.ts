@@ -15,9 +15,9 @@ const routes: Routes = [
 
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainPageComponent,canActivate: [AuthGuard] },
-  { path: 'welcome', component: WelcomePageComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SingupComponent },
+  { path: 'welcome', component: WelcomePageComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'signup', component: SingupComponent, canActivate: [AuthGuard] },
   { path: 'board', component: BoardPageComponent, canActivate: [AuthGuard] },
   { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundPageComponent, canActivate: [AuthGuard] },
