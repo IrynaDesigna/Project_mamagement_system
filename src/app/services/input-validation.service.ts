@@ -31,7 +31,7 @@ export class InputValidationService {
   }
 
   passwordValidation(password: string) {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
+    const passwordRegex = /^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-zА-Яа-я\d@$#!%*?&]{7,}$/;
     if (!passwordRegex.test(password)) {
       this.isPasswordValid = false;
       throw new Error('The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
