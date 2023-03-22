@@ -21,10 +21,10 @@ export class InputValidationService {
   }
 
   loginValidation(login: string) {
-    const loginRegex = /^[a-zа-я0-9]{6,}$/i;
+    const loginRegex = /^[a-zа-я0-9]{5,}$/i;
     if (!loginRegex.test(login)) {
       this.isLoginValid = false;
-      throw new Error('Login must consist of only letterts and numbers and must be at least 6 characters long.');
+      throw new Error('Login must consist of only letterts and numbers and must be at least 5 characters long.');
     } else {
       this.isLoginValid = true;
     }
