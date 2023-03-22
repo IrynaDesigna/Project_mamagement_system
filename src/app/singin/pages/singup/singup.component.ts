@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LanguageService } from '../../../services/language.service';
 import { UserService } from 'src/app/services/user.service';
 import { InputValidationService } from 'src/app/services/input-validation.service';
+import { User } from 'src/app/core/models/app.model';
 
 @Component({
   selector: 'app-singup',
@@ -11,6 +12,14 @@ import { InputValidationService } from 'src/app/services/input-validation.servic
 })
 export class SingupComponent {
   title = 'PlanIt';
+  popupText!: string;
+  shouldClosePopup = false;
+  shouldShowPopup = false;
+  nameErr!: string;
+  loginErr!: string;
+  passwordErr!: string;
+  link!: string;
+
   selectedLanguage: string = 'en';
   url: string = '/auth/signup';
 
@@ -26,53 +35,69 @@ export class SingupComponent {
     });
   }
 
-  onExploreBtnClick(event: Event, next: HTMLElement) {
-    event.preventDefault();
-    if (next.style.display === 'none') {
-      // Follow link
-      const anchor = event.target as HTMLAnchorElement;
-      this.router.navigateByUrl(anchor.href);
-    } else {
-      // Remove link and hide parent element
-      const anchor = event.target as HTMLAnchorElement;
-      anchor.removeAttribute('href');
-      next.style.display = 'none';
+  onPopupClose() {
+    this.shouldShowPopup = false;
+    this.shouldClosePopup = true;
+    if (this.link) {
+      this.router.navigate([this.link]);
     }
   }
 
-  onSubmit(name: string, login: string, password: string, event: Event, next: HTMLElement) {
+  onSubmit(name: string, login: string, password: string, event: Event) {
     event.preventDefault();
 
     name = name.toLowerCase().trim();
     login = login.toLowerCase().trim();
     password = password.trim();
 
-    this.inputValidationService.nameValidation(name);
-    this.inputValidationService.loginValidation(login);
-    this.inputValidationService.passwordValidation(password);
-
-    const body = {
-      name: name,
-      login: login,
-      password: password
+    let body: User = {
+      name: "",
+      login: ""
     };
 
-    this.userService.createUser(body).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        next.style.display = 'flex';
-        next.children[0].innerHTML = `Something went wrong. Please, try again`;
-        next.children[1].innerHTML = 'Close';
-        next.children[1].removeAttribute('href');
-        const button = next.children[1];
-        this.renderer.listen(button, 'click', (event) => this.onExploreBtnClick(event, next));
-      },
-      complete: () => {
-        console.log('Observable completed');
-        next.style.display = 'flex';
-      }
-    });
+    try {
+      this.inputValidationService.nameValidation(name);
+      body.name = name;
+    }
+    catch(e: any) {
+        if (this.selectedLanguage === 'en') { this.nameErr = `*${e.message}`; }
+        else { this.nameErr = '*Имя должно содержать только буквы и должно состоять как минимум из 4х букв..'};
+    }
+
+    try {
+      this.inputValidationService.loginValidation(login);
+      body.login = login;
+    }
+    catch(e: any) {
+        if (this.selectedLanguage === 'en') { this.loginErr = `*${e.message}`; }
+        else { this.loginErr = '*Логин может содержать только буквы и цыфры, и должен состоять как минимум из 6ти символов.'};
+    }
+
+    try {
+      this.inputValidationService.passwordValidation(password);
+      body.password = password;
+    }
+    catch(e: any) {
+        if (this.selectedLanguage === 'en') { this.passwordErr = `*${e.message}`; }
+        else { this.passwordErr = '*Логин может содержать только буквы и цыфры, и должен состоять как минимум из 6ти символов.'};
+    }
+
+
+
+    if ( body.name !== "" && body.login !== "" && body.password ) {
+      this.userService.createUser(body).subscribe({
+          next: (response) => {},
+          error: (error) => {
+            this.popupText = error.error.message;
+            this.shouldShowPopup = true;
+          },
+          complete: () => {
+            if (this.selectedLanguage === 'en') { this.popupText = `Welcome to ${this.title}` }
+            else { this.popupText = `Добро пожаловать в ${this.title}` };
+            this.link = '/login';
+            this.shouldShowPopup = true;
+          }
+        });
+    }
   }
 }

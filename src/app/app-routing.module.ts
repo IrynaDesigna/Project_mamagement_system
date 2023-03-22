@@ -13,7 +13,7 @@ const routes: Routes = [
   // { path: '', redirectTo: 'todos', pathMatch: 'full' },
   // { path: 'todos', loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule) },
 
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainPageComponent,canActivate: [AuthGuard] },
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'login', component: LoginComponent },
