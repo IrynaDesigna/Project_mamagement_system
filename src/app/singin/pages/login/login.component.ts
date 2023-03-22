@@ -13,6 +13,9 @@ export class LoginComponent {
   selectedLanguage: string = 'en';
   url: string = '/auth/signin';
   localStorage = window.localStorage;
+  popupText!: string;
+  shouldClosePopup = false;
+  shouldShowPopup = false;
 
   constructor(
     private languageService: LanguageService,
@@ -22,6 +25,11 @@ export class LoginComponent {
     this.languageService.language$.subscribe((language) => {
       this.selectedLanguage = language;
     });
+  }
+
+  onPopupClose() {
+    this.shouldShowPopup = false;
+    this.shouldClosePopup = true;
   }
 
   onSubmit(login: string, password: string, event: Event) {
@@ -34,7 +42,14 @@ export class LoginComponent {
         this.router.navigate(['/main']);
       },
       error: (error) => {
-        console.log(error);
+
+        if (this.selectedLanguage === 'en') {
+          this.popupText = `${error.error.message}. The username or password is wrong. Please, try again.`;
+        } else {
+          this.popupText = `${error.error.message}. Не правильное имя пользователя и пароль. Попробуйте еще раз.`;
+        };
+        this.shouldShowPopup = true;
+
       },
       complete: () => {
         console.log('User log in');
