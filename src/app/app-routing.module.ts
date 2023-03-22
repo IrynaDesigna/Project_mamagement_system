@@ -10,9 +10,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { EditProfileComponent } from './core/pages/edit-profile/edit-profile.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'todos', pathMatch: 'full' },
-  // { path: 'todos', loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule) },
-
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainPageComponent,canActivate: [AuthGuard] },
   { path: 'welcome', component: WelcomePageComponent, canActivate: [AuthGuard] },
