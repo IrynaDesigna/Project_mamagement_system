@@ -1,31 +1,70 @@
-<h2>Hello, <span>{{ localStorage.getItem('userLogin') }}</span>!</h2>
+<h2 *ngIf="selectedLanguage === 'en'">Hello, <span>{{ localStorage.getItem('userLogin') }}</span>!</h2>
+<h2 *ngIf="selectedLanguage === 'ru'">Привет, <span>{{ localStorage.getItem('userLogin') }}</span>!</h2>
 
-<h3>Edit profile</h3>
 
-<form (submit)="onChangeLogin(loginField.value)">
-  <div>
-    <label for="login">Change login</label>
-    <input type="text" id="login" #loginField>
+<h3 *ngIf="selectedLanguage === 'en'">Edit profile</h3>
+<h3 *ngIf="selectedLanguage === 'ru'">Редактировать профиль</h3>
+
+<form (submit)="onChangeLogin(loginField.value)" *ngIf="selectedLanguage === 'en'">
+  <div class="input-wrapper">
+    <div>
+      <label for="login">Change login</label>
+      <input type="text" id="login" #loginField [(ngModel)]="userLogin" name="user-login">
+    </div>
+    <button type="submit" class="reset-btn">Change login</button>
   </div>
-  <button type="submit" class="reset-btn">Change login</button>
-  <div>
-
+  <div class="err"
+    [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">
+    {{loginErr}}
   </div>
-  <div class="err" [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">*Login must consist of only letterts and numbers and must be at least 6 characters long.</div>
 </form>
 
-<form (submit)="onUserReset(passwordField.value)">
-  <div>
-    <label for="password">Reset the password</label>
-    <input type="password" id="password" #passwordField autocomplete="">
+<form (submit)="onChangeLogin(loginField.value)" *ngIf="selectedLanguage === 'ru'">
+  <div class="input-wrapper">
+    <div>
+      <label for="login">Изменить имя пользователя</label>
+      <input type="text" id="login" #loginField [(ngModel)]="userLogin" name="user-login">
+    </div>
+    <button type="submit" class="reset-btn">Применить</button>
   </div>
-  <div class="err" [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">*The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.</div>
-  <button type="submit" class="reset-btn">Reset</button>
+  <div class="err"
+    [ngClass]="{'err-visible': !inputValidationService.isLoginValid}">
+    {{loginErr}}
+  </div>
 </form>
 
+<form (submit)="onUserReset(passwordField.value)" *ngIf="selectedLanguage === 'en'">
+  <div class="input-wrapper">
+    <div>
+      <label for="password">Reset the password</label>
+      <input type="password" id="password" #passwordField autocomplete="" [(ngModel)]="userPassword" name="user-password">
+    </div>
+    <button type="submit" class="reset-btn">Reset</button>
+  </div>
+  <div class="err"
+    [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">
+    {{ passwordErr }}
+  </div>
+</form>
+
+<form (submit)="onUserReset(passwordField.value)" *ngIf="selectedLanguage === 'ru'">
+  <div class="input-wrapper">
+    <div>
+      <label for="password">Изменить пароль</label>
+      <input type="password" id="password" #passwordField autocomplete="" [(ngModel)]="userPassword" name="user-password">
+    </div>
+    <button type="submit" class="reset-btn">Применить</button>
+  </div>
+  <div class="err"
+    [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">
+    {{ passwordErr }}
+  </div>
+</form>
 <app-popup *ngIf="shouldShowPopup && !shouldClosePopup" [popupText]="popupText" (closePopup)="onPopupClose()"></app-popup>
 
-<div style="text-align: center;">
+<div style="text-align: center;" *ngIf="selectedLanguage === 'en'">
   <button class="delete-btn" (click)="onUserDelete($event)">Delete profile</button>
 </div>
-
+<div style="text-align: center;" *ngIf="selectedLanguage === 'ru'">
+  <button class="delete-btn" (click)="onUserDelete($event)">Удалить профиль</button>
+</div>
