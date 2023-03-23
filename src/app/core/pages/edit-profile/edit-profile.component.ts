@@ -16,7 +16,8 @@ export class EditProfileComponent implements OnInit {
   selectedLanguage: string = 'en';
   localStorage = window.localStorage;
   popupText!: string;
-  shouldClosePopup = false;
+  deleteConfirm!: string;
+  shouldDeleteConfirm = false;
   shouldShowPopup = false;
   loginErr!: string;
   passwordErr!: string;
@@ -35,10 +36,28 @@ export class EditProfileComponent implements OnInit {
     this.languageService.language$.subscribe((language) => {
       this.selectedLanguage = language;
     });
+
+    if (this.cookieService.get('language') === 'en' ) {
+      this.deleteConfirm = "Are you sure you want to delete your profile?";
+    } else {
+      this.deleteConfirm = "Вы увереныб что хотите удалить свой профиль?"
+    }
   }
 
   onPopupClose() {
-    this.shouldClosePopup = true;
+    this.shouldShowPopup = false;
+  }
+
+  onCloseConfirmWindow() {
+    this.shouldDeleteConfirm = false;
+  }
+
+  onActionConfirm() {
+    this.deleteUser();
+  }
+
+  onUserDelete() {
+    this.shouldDeleteConfirm = true;
   }
 
   onChangeLogin(userLogin: string) {
@@ -68,10 +87,7 @@ export class EditProfileComponent implements OnInit {
 
         if (body.login !== "") {
           this.userService.resetUser(userId, body).subscribe({
-            next: (Response) => {
-              console.log(Response);
-
-            },
+            next: (Response) => {},
             error: (error) => {
               console.log(error);
             },
@@ -126,7 +142,7 @@ export class EditProfileComponent implements OnInit {
     })
   }
 
-  onUserDelete(event: Event) {
+  deleteUser() {
     const userId: string = this.cookieService.get("userId");
 
     this.userService.getUser(userId).subscribe({

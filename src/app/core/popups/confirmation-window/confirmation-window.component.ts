@@ -6,10 +6,15 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./confirmation-window.component.sass']
 })
 export class ConfirmationWindowComponent {
-  @Input() ConfirmWindowText!: string;
-  @Output() closeConfirmWindow = new EventEmitter<void>();
+  @Input() deleteConfirm!: string;
+  @Output() closeConfirmWindow = new EventEmitter<boolean>();
+  @Output() actionConfirm = new EventEmitter<void>();
 
   onCloseConfirmWindow() {
     this.closeConfirmWindow.emit();
+  }
+
+  onActionConfirm() {
+    this.actionConfirm.emit();
   }
 }

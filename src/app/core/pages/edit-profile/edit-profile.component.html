@@ -60,11 +60,18 @@
     {{ passwordErr }}
   </div>
 </form>
-<app-popup *ngIf="shouldShowPopup && !shouldClosePopup" [popupText]="popupText" (closePopup)="onPopupClose()"></app-popup>
+<app-popup *ngIf="shouldShowPopup" [popupText]="popupText" (closePopup)="onPopupClose()"></app-popup>
 
 <div style="text-align: center;" *ngIf="selectedLanguage === 'en'">
-  <button class="delete-btn" (click)="onUserDelete($event)">Delete profile</button>
+  <button class="delete-btn" (click)="onUserDelete()">Delete profile</button>
 </div>
 <div style="text-align: center;" *ngIf="selectedLanguage === 'ru'">
-  <button class="delete-btn" (click)="onUserDelete($event)">Удалить профиль</button>
+  <button class="delete-btn" (click)="onUserDelete()">Удалить профиль</button>
 </div>
+
+<app-confirmation-window
+  *ngIf="shouldDeleteConfirm"
+  [deleteConfirm]="deleteConfirm"
+  (closeConfirmWindow)="onCloseConfirmWindow()"
+  (actionConfirm)="onActionConfirm()">
+</app-confirmation-window>
