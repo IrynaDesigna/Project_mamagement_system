@@ -82,8 +82,6 @@ export class AuthService implements OnInit {
           localStorage.setItem('checkingValue', password);
           this.currentUserSubject.next(user);
           this.setIsLoggedIn(true);
-          console.log(this.getIsLoggedIn());
-
         })
       );
   }

@@ -5,21 +5,24 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { FormsModule } from '@angular/forms';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
-import { PopupComponent } from './components/popup/popup.component';
+import { PopupComponent } from './popups/popup/popup.component';
+import { ConfirmationWindowComponent } from './popups/confirmation-window/confirmation-window.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    PopupComponent,
     NotFoundPageComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    PopupComponent,
+    ConfirmationWindowComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    PopupComponent
+    PopupComponent,
+    ConfirmationWindowComponent
   ],
   imports: [
     CommonModule,

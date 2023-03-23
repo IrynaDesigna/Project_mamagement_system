@@ -23,7 +23,7 @@
   </div>
   <div>
     <label for="password">Create your password</label><br>
-    <input type="password" id="password" #passwordField>
+    <input type="password" id="password" #passwordField autocomplete="">
     <div class="err"
       [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">
       {{ passwordErr }}
@@ -53,7 +53,7 @@
   </div>
   <div>
     <label for="password">Создать пароль</label><br>
-    <input type="password" id="password" #passwordField>
+    <input type="password" id="password" #passwordField autocomplete="">
     <div class="err"
       [ngClass]="{'err-visible': !inputValidationService.isPasswordValid}">
       {{ passwordErr }}
