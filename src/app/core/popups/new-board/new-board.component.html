@@ -15,3 +15,9 @@
   </div>
   <button type="submit">Создать</button>
 </form>
+
+<app-popup
+  *ngIf="shouldShowPopup && !shouldClosePopup"
+  [popupText]="popupText"
+  (closePopup)="onPopupClose()">
+</app-popup>

@@ -3,6 +3,7 @@ import { LanguageService } from 'src/app/services/language.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { Board } from '../../models/app.model';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,11 +16,15 @@ export class NewBoardComponent implements OnInit {
   url: string = '/boards';
   boardsTitle!: string;
   private userId: string = this.cookieService.get('userId');
+  popupText!: string;
+  shouldShowPopup = false;
+  shouldClosePopup = false;
 
   constructor(
     private languageService: LanguageService,
     private httpService: HttpServiceService,
     private cookieService: CookieService,
+    private router: Router,
   ) {
     this.languageService.language$.subscribe((language) => {
       this.selectedLanguage = language;
@@ -28,12 +33,14 @@ export class NewBoardComponent implements OnInit {
 
   ngOnInit() {}
 
+  onPopupClose() {
+    this.shouldShowPopup = false;
+    this.shouldClosePopup = true;
+    this.router.navigate(['/main']);
+  }
+
   onSubmit(title: string) {
-    console.log('ckicked');
-
-
-
-    const body: Board = {
+     const body: Board = {
       title: title,
       owner: this.userId,
       users: [this.userId]
@@ -42,10 +49,20 @@ export class NewBoardComponent implements OnInit {
     this.httpService.post(this.url,body).subscribe({
       next: (res) => {
         console.log(res);
-
+        if (this.selectedLanguage === 'en') {
+          this.popupText = `The board: ${res.title}, was craeted!`;
+        } else {
+          this.popupText = `План: ${res.title}, создан!`;
+        };
+        this.shouldShowPopup = true;
       },
       error: (err) => {
-        console.log(err);
+        if (this.selectedLanguage === 'en') {
+          this.popupText = `Something went wrong. Please, try again.`;
+        } else {
+          this.popupText = `Что-то пошло не так. Пожалуйста, попробуйте еще раз.`;
+        };
+        this.shouldShowPopup = true;
 
       },
       complete: () => {
