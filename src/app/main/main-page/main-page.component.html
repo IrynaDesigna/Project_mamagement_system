@@ -1,6 +1,6 @@
-<ul class="board-container" *ngFor="let boardTitle of boardTitles; let i = index" >
-  <li class="board" [id]="boardIds[i]">
-    <h4 class="board-title">{{boardTitles[i]}} </h4>
+<ul class="board-container"  >
+  <li class="board" *ngFor="let boardTitle of boardTitles; let i = index" [id]="boardIds[i]">
+    <h4 class="board-title">{{[i+1] + '. ' + boardTitles[i]}} </h4>
     <a [href]="boardLinks[i]"><i class="fa-solid fa-pen-to-square"></i></a>
   </li>
 </ul>

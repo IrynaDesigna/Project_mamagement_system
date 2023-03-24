@@ -9,6 +9,7 @@ import { LoginComponent } from './singin/pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { EditProfileComponent } from './core/pages/edit-profile/edit-profile.component';
 import { NewBoardComponent } from './core/popups/new-board/new-board.component';
+import { BoardComponent } from './main/pages/board/board.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'board', component: BoardPageComponent, canActivate: [AuthGuard] },
   { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: 'create-new-board', component: NewBoardComponent, canActivate: [AuthGuard] },
+  { path: 'boards/:id/columns', component: BoardComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundPageComponent, canActivate: [AuthGuard] },
 
 
