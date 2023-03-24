@@ -10,11 +10,11 @@ export interface User {
   login:	string,
   password?:	string,
   token?: string,
-  id?: string
+  id?: string,
 }
 
 export interface Board {
-  _id:	string,
+  _id?:	string,
   title:	string,
   owner:	string,
   users:	string[]

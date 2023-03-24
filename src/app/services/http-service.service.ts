@@ -19,7 +19,7 @@ export class HttpServiceService {
     private cookieService: CookieService,
     ) { }
 
-  public get(url: string, options?: any) {
+  public get(url: string, options?: any): Observable<any> {
     return this.http.get(`${this.baseUrl}${url}`, { headers: this.userHeaders, ...options });
   }
 
@@ -28,10 +28,14 @@ export class HttpServiceService {
   }
 
   public post(url: string, body: any, options?: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}${url}`, body, { headers: this.headers, ...options });
+    return this.http.post(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options });
   }
 
   public put(url: string, body: any, options?: any): Observable<any> {
     return this.http.put(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options })
   }
+
+  // public boardPOST(url: string, body: any, options?: any): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options });
+  // }
 }

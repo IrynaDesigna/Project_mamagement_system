@@ -43,6 +43,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  onNewBoardCreate(e: Event){
+    e.preventDefault();
+    this.router.navigate(['/create-new-board']);
+  }
 
   onLogoutClick() {
     this.authService.setIsLoggedIn(false);

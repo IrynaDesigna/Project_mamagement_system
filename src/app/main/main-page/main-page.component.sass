@@ -8,25 +8,22 @@
   flex-wrap: wrap
 
 .board
+  @include my-flexbox()
   background: #fff
   width: 80%
   margin: 15px auto
   border: 1px solid $primary
   border-radius: 2px
-  cursor: pointer
+  background: $primary
+  padding: 10px 15px
   h4
-    background: $primary
     color: #fff
     font-weight: 600
-    padding: 10px
     text-align: center
-  .board-info
-    @include my-flexbox
-    padding: 5px 10px
-  .board-author
-    font-weight: 600
   a
-    color: $primary
+    display: inline-block
+    cursor: pointer
+    color: #fff
     font-size: 24px
     &:hover
       transform: scale(1.1)

@@ -8,6 +8,7 @@ import { SingupComponent } from './singin/pages/singup/singup.component';
 import { LoginComponent } from './singin/pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { EditProfileComponent } from './core/pages/edit-profile/edit-profile.component';
+import { NewBoardComponent } from './core/popups/new-board/new-board.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -17,7 +18,9 @@ const routes: Routes = [
   { path: 'signup', component: SingupComponent, canActivate: [AuthGuard] },
   { path: 'board', component: BoardPageComponent, canActivate: [AuthGuard] },
   { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuard] },
+  { path: 'create-new-board', component: NewBoardComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundPageComponent, canActivate: [AuthGuard] },
+
 
 ];
 

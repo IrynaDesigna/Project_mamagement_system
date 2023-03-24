@@ -1,10 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BoardsService } from 'src/app/services/boards.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.sass']
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
+  private userId: string = this.cookieService.get('userId');
+  boardTitles: string[] = [];
+  boardIds: string[] = [];
+  boardLinks: string[] = [];
 
+
+  constructor(
+    private boardsService: BoardsService,
+    private cookieService: CookieService,
+    ) {}
+
+  ngOnInit() {
+    this.boardsService.getAllboards(this.userId).subscribe({
+      next: (res) => {
+        console.log(res);
+        const boards = res.map(board => ({ title: board.title, id: board._id }));
+
+        this.boardTitles = boards.map(board => board.title);
+        this.boardIds = boards.map(board => board.id || '');
+        this.boardLinks = boards.map(board => `/boards/${board.id}/columns`);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 }

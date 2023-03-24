@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { PopupComponent } from './popups/popup/popup.component';
 import { ConfirmationWindowComponent } from './popups/confirmation-window/confirmation-window.component';
+import { NewBoardComponent } from './popups/new-board/new-board.component';
 
 
 @NgModule({
@@ -16,13 +17,15 @@ import { ConfirmationWindowComponent } from './popups/confirmation-window/confir
     NotFoundPageComponent,
     EditProfileComponent,
     PopupComponent,
-    ConfirmationWindowComponent
+    ConfirmationWindowComponent,
+    NewBoardComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     PopupComponent,
-    ConfirmationWindowComponent
+    ConfirmationWindowComponent,
+    NewBoardComponent
   ],
   imports: [
     CommonModule,

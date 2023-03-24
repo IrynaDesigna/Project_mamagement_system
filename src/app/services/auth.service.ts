@@ -72,9 +72,9 @@ export class AuthService implements OnInit {
           if (user.token) {
             this.decodedToken = JSON.parse(atob(user.token.split('.')[1]));
 
-            this.setCookie( 'token', this.decodedToken.exp, user.token );
-            this.setCookie( 'userId', this.decodedToken.exp, this.decodedToken.id );
-            this.setCookie( 'userLogin', this.decodedToken.exp, this.decodedToken.login );
+            this.setCookie( 'token', this.decodedToken.exp/1000, user.token );
+            this.setCookie( 'userId', this.decodedToken.exp/1000, this.decodedToken.id );
+            this.setCookie( 'userLogin', this.decodedToken.exp/1000, this.decodedToken.login );
           };
 
           this.userService.getUser(login);

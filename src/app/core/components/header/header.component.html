@@ -17,8 +17,8 @@
     <div *ngIf="localStorage.getItem('userLogin')">
 
       <div class="auth">
-        <a href="/" *ngIf="selectedLanguage === 'en'" id="create-btn">Create new board</a>
-        <a href="/" *ngIf="selectedLanguage === 'ru'"id="create-btn">Создать новый план</a>
+        <a href="/" *ngIf="selectedLanguage === 'en'" id="create-btn" (click)="onNewBoardCreate($event)">Create new board</a>
+        <a href="/" *ngIf="selectedLanguage === 'ru'"id="create-btn" (click)="onNewBoardCreate($event)">Создать новый план</a>
 
         <a href="/edit-profile" *ngIf="localStorage.getItem('userLogin')" id="user-login">{{ localStorage.getItem('userLogin') }}</a>
 

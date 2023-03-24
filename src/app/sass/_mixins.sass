@@ -1,9 +1,9 @@
 @import './_variables'
 
-@mixin my-flexbox
+@mixin my-flexbox($jc: space-between, $ai: center)
   display: flex
-  justify-content: space-between
-  align-items: center
+  justify-content: $jc
+  align-items: $ai
 
 @mixin btn($color: $green, $hover: $yellow)
   box-sizing: content-box
@@ -15,4 +15,9 @@
   cursor: pointer
   &:hover
     background: $hover
+
+@mixin inputStyle
+  width: 300px
+  height: 35px
+  padding: 10px
 

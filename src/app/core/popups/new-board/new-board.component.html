@@ -1,0 +1,17 @@
+<form action="" id="create-new-board" *ngIf="selectedLanguage === 'en'" (ngSubmit)="onSubmit(titleField.value)">
+  <h3>Create a new board</h3>
+  <div>
+    <label for="board-title">Enter board's title</label>
+    <input type="text" id="board-title" #titleField [(ngModel)]="boardsTitle" name="boards-title">
+  </div>
+  <button type="submit">Create</button>
+</form>
+
+<form action="" id="create-new-board" *ngIf="selectedLanguage === 'ru'" (ngSubmit)="onSubmit(titleField.value)">
+  <h3>Создать новый план</h3>
+  <div>
+    <label for="board-title">Название плана</label>
+    <input type="text" id="board-title" #titleField>
+  </div>
+  <button type="submit">Создать</button>
+</form>
