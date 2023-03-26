@@ -4,7 +4,8 @@ import { LanguageService } from '../../../services/language.service';
 import { InputValidationService } from 'src/app/services/input-validation.service';
 import { BoardsService } from 'src/app/services/boards.service';
 import { Router } from '@angular/router';
-import { Column } from 'src/app/core/models/app.model';
+import { CookieService } from 'ngx-cookie-service';
+import { ObjectWithArraysOfStrings } from 'src/app/core/models/app.model';
 
 @Component({
   selector: 'app-board',
@@ -13,17 +14,22 @@ import { Column } from 'src/app/core/models/app.model';
 })
 export class BoardComponent implements OnInit {
   selectedLanguage: string = 'en';
+  userId: string = this.cookieService.get('userId').split('=')[0].split(',')[0];
   boardId: string = this.route.snapshot.paramMap.get('id') ?? '';
   boardLength: number = 0;
+  taskLength: number = 0;
   boardData: any;
   popupText!: string;
+  columnId!: string;
+  shouldShowCreateTask = false;
+  shouldDeleteConfirm = false;
   shouldClosePopup = false;
   shouldShowPopup = false;
   shouldShowCreateColumn = false;
   columnTitles: string[] = [];
   columnIds: string[] = [];
-  columnOrders: number[] = [];
-  taskTitles: string[] = [];
+  taskTitles: ObjectWithArraysOfStrings = {};
+  taskIds: ObjectWithArraysOfStrings = {};
 
   constructor(
     private languageService: LanguageService,
@@ -31,6 +37,7 @@ export class BoardComponent implements OnInit {
     private boardsService: BoardsService,
     private router: Router,
     public inputValidationService: InputValidationService,
+    private cookieService: CookieService
     ) {
       this.languageService.language$.subscribe((language) => {
         this.selectedLanguage = language;
@@ -38,22 +45,23 @@ export class BoardComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.boardLoding();
+    this.boardLoading();
   }
 
-  boardLoding() {
+  boardLoading() {
     this.boardsService.getBoard(this.boardId).subscribe({
       next: (res) => {
         this.boardData = res;
         this.boardLength = this.boardData.length;
-        console.log(res);
-
         const columns = res.map(column => ({id: column._id, title: column.title, order: column.order}));
-        console.log(columns);
-
         this.columnTitles = columns.map(column => column.title);
         this.columnIds = columns.map(column => column.id || '');
 
+        columns.forEach(column => {
+          if (column.id !== undefined ) {
+            this.colunmBuilder(column.id);
+          }
+        });
       },
       error: (err) => {
         console.log(err);
@@ -65,6 +73,11 @@ export class BoardComponent implements OnInit {
   onPopupClose() {
     this.shouldShowPopup = false;
     this.shouldClosePopup = true;
+    this.router.navigate(['/main']);
+  }
+
+  onCloseConfirmWindow() {
+    this.shouldDeleteConfirm = false;
   }
 
   onCloseClick() { this.shouldShowCreateColumn = false; }
@@ -91,7 +104,7 @@ export class BoardComponent implements OnInit {
         next: (res) => { },
         error: (err) => { console.log(err); },
         complete: () => {
-          this.boardLoding();
+          this.boardLoading();
           this.shouldShowCreateColumn = false;
         }
       });
@@ -99,6 +112,16 @@ export class BoardComponent implements OnInit {
   }
 
   onDeleteBoard(event: Event) {
+    if (this.selectedLanguage === 'en') {
+      this.popupText = `Do you want to delete current board?`;
+    } else {
+      this.popupText = `Вы действительно хотите удалить текущий план?`;
+    };
+    this.shouldDeleteConfirm = true;
+  }
+
+  onDeleteBoardConfirm() {
+    this.shouldDeleteConfirm = false;
     this.boardsService.deleteBoard(this.boardId).subscribe({
       next: (res) => {
         if (this.selectedLanguage === 'en') {
@@ -114,16 +137,77 @@ export class BoardComponent implements OnInit {
 
   onColumnCreate(event: Event){ this.shouldShowCreateColumn = true; }
 
-  onColumnDelete(columnId: string) {
-    console.log(this.boardId,columnId);
+  onColumnDelete(columnId: string, title: string) {
+    this.columnId = columnId;
+    if (this.selectedLanguage === 'en') {
+      this.popupText = `Do you want to delete ${title}?`;
+    } else {
+      this.popupText = `Вы действительно хотите удалить ${title}?`;
+    };
+    this.shouldDeleteConfirm = true;
+  }
 
-    this.boardsService.deleteColumn(this.boardId,columnId).subscribe({
+  onDeleteColumnConfirm() {
+    this.shouldDeleteConfirm = false;
+    this.boardsService.deleteColumn(this.boardId,this.columnId).subscribe({
       next: (res) => {
         console.log(res);
-        this.boardLoding();
+        this.boardLoading();
       },
-      error: (err) => { console.log(err); }
+      error: (err) => { console.log(err); },
+      complete: () => {
+        this.columnId = '';
+      }
+    })
+  }
+
+  onCreateTaskClick(title: string) {
+    this.shouldShowCreateTask = false;
+
+    this.boardsService.getTasksbyColumn(this.boardId,this.columnId).subscribe({
+      next: (res) => { this.taskLength = res.length; },
+      error: (err) => {console.log(err);}
+    });
+
+    const body = {
+      title: title,
+      order: this.boardLength + 1,
+      description: title,
+      userId: this.userId,
+      users: [this.userId]
+    };
+
+    this.boardsService.createTask(this.boardId, this.columnId, body).subscribe({
+      next: (res) => { console.log(res);
+       },
+      error: (err) => { console.log(err);}
     })
 
+    this.boardLoading();
+  }
+
+  colunmBuilder(columnId: string) {
+    this.boardsService.getTasksbyColumn(this.boardId,columnId).subscribe({
+      next: (res) => {
+        const tasks = res.map(task => ({id: task._id, title: task.title}));
+
+        if (columnId !== undefined) {
+          this.taskTitles[columnId] = tasks.map(column => column.title);
+          this.taskIds[columnId] = tasks.map(column => column.id || '');
+        }
+      },
+      error: (err) => {console.log(err);}
+    });
+
+  }
+
+  onCloseTaskCreator() {
+    this.shouldShowCreateTask = false;
+
+  }
+
+  onTaskCreate(columnId: string) {
+    this.columnId = columnId;
+    this.shouldShowCreateTask = true;
   }
 }

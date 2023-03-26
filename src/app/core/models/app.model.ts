@@ -29,13 +29,11 @@ export interface Column {
 }
 
 export interface Task {
-  _id:	string,
+  _id?:	string,
   title:	string,
   order:	number,
-  boardId:	string,
-  columnId:	string,
   description:	string,
-  userId:	number,
+  userId:	string,
   users:	string[]
 }
 
@@ -58,4 +56,8 @@ export interface Point {
 export interface ErrorResponse {
   statusCode:	number,
   message:	string
+}
+
+export interface ObjectWithArraysOfStrings {
+  [key: string]: string[];
 }

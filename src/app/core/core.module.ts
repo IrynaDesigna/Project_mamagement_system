@@ -9,6 +9,7 @@ import { PopupComponent } from './popups/popup/popup.component';
 import { ConfirmationWindowComponent } from './popups/confirmation-window/confirmation-window.component';
 import { NewBoardComponent } from './popups/new-board/new-board.component';
 import { CreateColumnComponent } from './popups/create-column/create-column.component';
+import { TaskCreatorComponent } from './popups/task-creator/task-creator.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { CreateColumnComponent } from './popups/create-column/create-column.comp
     PopupComponent,
     ConfirmationWindowComponent,
     NewBoardComponent,
-    CreateColumnComponent
+    CreateColumnComponent,
+    TaskCreatorComponent
   ],
   exports: [
     HeaderComponent,
@@ -28,7 +30,8 @@ import { CreateColumnComponent } from './popups/create-column/create-column.comp
     PopupComponent,
     ConfirmationWindowComponent,
     NewBoardComponent,
-    CreateColumnComponent
+    CreateColumnComponent,
+    TaskCreatorComponent
   ],
   imports: [
     CommonModule,

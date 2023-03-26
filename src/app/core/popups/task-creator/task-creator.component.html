@@ -1,0 +1,24 @@
+<div class="column-creator">
+  <h2 *ngIf="selectedLanguage === 'en'">Task creation</h2>
+  <h2 *ngIf="selectedLanguage === 'ru'">Создать задание</h2>
+
+
+  <form action="" (ngSubmit)="onCreateTaskClick(taskTitle)" *ngIf="selectedLanguage === 'en'">
+    <label for="column-title">Enter the task title</label>
+    <input [(ngModel)]="taskTitle" name="task-title">
+    <div class="err">{{ errorText }}</div>
+    <button type="submit" class="column-create-btn">Create</button>
+  </form>
+
+  <form action=""  (ngSubmit)="onCreateTaskClick(taskTitle)" *ngIf="selectedLanguage === 'ru'">
+    <label for="column-title">Введите навание pflfybz</label>
+    <input type="text" [(ngModel)]="taskTitle" name="task-title">
+    <div class="err">{{ errorText }}</div>
+    <button type="submit" class="column-create-btn">Создать</button>
+  </form>
+
+  <div class="close-btn" *ngIf="selectedLanguage === 'en'" (click)="onCloseTaskCreator()">Close</div>
+  <div class="close-btn" *ngIf="selectedLanguage === 'ru'" (click)="onCloseTaskCreator()">Закрыть</div>
+
+</div>
+

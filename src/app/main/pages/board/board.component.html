@@ -12,16 +12,16 @@
     <div class="title-wrapper">
       <h3>{{ columnTitles[i] }}</h3>
       <div class="column-actions">
-        <div class="btn"><i class="fa-solid fa-plus"></i></div>
+        <div class="btn" (click)="onTaskCreate(columnIds[i])"><i class="fa-solid fa-plus"></i></div>
         <div class="btn"><i class="fa-solid fa-pen-to-square"></i></div>
-        <div class="btn" (click)="onColumnDelete(columnIds[i])"><i class="fa-solid fa-trash"></i></div>
+        <div class="btn" (click)="onColumnDelete(columnIds[i],columnTitles[i])"><i class="fa-solid fa-trash"></i></div>
       </div>
     </div>
 
     <ul class="task-list">
-      <li class="taks"  *ngFor="let taskTitle of taskTitles; let i = index">
-        <label for=""></label>
-        <input type="checkbox" name="task" id="">
+      <li class="taks"  *ngFor="let taskId of taskIds[columnIds[i]]; let j = index">
+        <input type="checkbox" name="task" [id]="taskId">
+        <label [for]="taskId">>{{ taskTitles[columnIds[i]][j] }}</label>
       </li>
     </ul>
   </li>
@@ -40,3 +40,30 @@
   [errorText]="popupText"
   >
 </app-create-column>
+
+<app-task-creator
+*ngIf="shouldShowCreateTask"
+(createTaskClick)="onCreateTaskClick($event)"
+(closeTaskCreator)="onCloseTaskCreator()"
+></app-task-creator>
+
+<app-confirmation-window
+  *ngIf="shouldDeleteConfirm"
+  [deleteConfirm]="popupText"
+  (closeConfirmWindow)="onCloseConfirmWindow()"
+  (actionConfirm)="onDeleteBoardConfirm()">
+</app-confirmation-window>
+
+<app-confirmation-window
+  *ngIf="shouldDeleteConfirm"
+  [deleteConfirm]="popupText"
+  (closeConfirmWindow)="onCloseConfirmWindow()"
+  (actionConfirm)="onDeleteColumnConfirm()">
+</app-confirmation-window>
+
+<!-- <app-confirmation-window
+  *ngIf="shouldDeleteConfirm"
+  [deleteConfirm]="popupText"
+  (closeConfirmWindow)="onCloseConfirmWindow()"
+  (actionConfirm)="onDeleteBoardConfirm()">
+</app-confirmation-window> -->

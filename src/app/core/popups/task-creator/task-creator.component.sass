@@ -1,0 +1,45 @@
+@import './../../../sass/_variables'
+@import './../../../sass/_mixins'
+
+.column-creator
+  padding: 0 40px
+  display: flex
+  position: absolute
+  top: 0
+  left: 0
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  height: 100vh
+  width: 100vw
+  z-index: 1000
+  background: $bg
+  form
+    @include my-flexbox(center,center)
+    flex-direction: column
+  input
+    padding: 10px 15px
+    border-radius: 5px
+    border: none
+
+
+.column-create-btn
+  @include btn($green,$yellow)
+  margin-top: 15px
+  border: none
+
+.close-btn
+  @include btn($green,$yellow)
+  position: absolute
+  top: 15px
+  right: 15px
+  cursor: pointer
+
+h2
+  color:#673ab7
+  font-size: 28px
+  text-align: center
+  margin-bottom: 30px
+
+.err
+  color: $pink

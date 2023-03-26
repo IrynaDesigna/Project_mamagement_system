@@ -14,7 +14,7 @@
   @include btn(red, $yellow)
 
 .column-container
-  @include my-flexbox()
+  @include my-flexbox(space-between, flex-start)
   flex-wrap: wrap
 
 
@@ -23,8 +23,12 @@
   border: 1px solid $primary
   width: 48%
   margin: 10px 0
+  @media screen and (max-width: 650px)
+    width: 100%
   &:not(&:nth-child(2n))
     margin-right: 4%
+    @media screen and (max-width: 650px)
+      margin-right: 0
   .btn
     &:hover
       color: $green

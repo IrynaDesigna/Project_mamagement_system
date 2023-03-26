@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpServiceService } from './http-service.service';
-import { Board, Column } from '../core/models/app.model';
+import { Board, Column, Task } from '../core/models/app.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -30,9 +30,19 @@ export class BoardsService {
     return this.httpService.post(url,body);
   }
 
+  getTasksbyColumn(boardId: string, columnId: string): Observable<Task[]>{
+    const url = `/boards/${boardId}/columns/${columnId}/tasks`;
+    return this.httpService.get(url);
+  }
+
   deleteColumn(boardId: string, columnId: string) {
     const url = `/boards/${boardId}/columns/${columnId}`;
     return this.httpService.delete(url);
+  }
+
+  createTask(boardId: string, columnId: string, body: Task) {
+    const url = `/boards/${boardId}/columns/${columnId}/tasks`;
+    return this.httpService.post(url,body);
   }
 
 }

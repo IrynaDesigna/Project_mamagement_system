@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { Task } from '../core/models/app.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,4 @@ export class HttpServiceService {
   public put(url: string, body: any, options?: any): Observable<any> {
     return this.http.put(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options })
   }
-
-  // public boardPOST(url: string, body: any, options?: any): Observable<any> {
-  //   return this.http.post(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options });
-  // }
 }
