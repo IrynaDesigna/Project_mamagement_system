@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardsService } from 'src/app/services/boards.service';
+import { HttpServiceService } from 'src/app/services/http-service.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Board } from 'src/app/core/models/app.model';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -8,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./main-page.component.sass']
 })
 export class MainPageComponent implements OnInit {
-  private userId: string = this.cookieService.get('userId');
+  private userId!: string;
   boardTitles: string[] = [];
   boardIds: string[] = [];
   boardLinks: string[] = [];
@@ -17,10 +21,16 @@ export class MainPageComponent implements OnInit {
   constructor(
     private boardsService: BoardsService,
     private cookieService: CookieService,
+    private httpService: HttpServiceService
     ) {}
 
   ngOnInit() {
-    this.boardsService.getAllboards(this.userId).subscribe({
+    this.userId = this.cookieService.get('userId')
+    this.getBoards(this.userId);
+  }
+
+  getBoards(userId: string) {
+    this.boardsService.getAllboards(userId).subscribe({
       next: (res) => {
         console.log(res);
         const boards = res.map(board => ({ title: board.title, id: board._id }));
@@ -34,4 +44,7 @@ export class MainPageComponent implements OnInit {
       }
     })
   }
+
 }
+
+

@@ -7,6 +7,7 @@ export class InputValidationService {
   isPasswordValid: boolean = true;
   isNameValid: boolean = true;
   isLoginValid: boolean = true;
+  isTitleValid: boolean = true;
 
   constructor() { }
 
@@ -37,6 +38,16 @@ export class InputValidationService {
       throw new Error('The password must be at least 7 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
     } else {
       this.isPasswordValid = true;
+    }
+  }
+
+  titleValidation(title: string) {
+    const titleRegex = /^(?=\S)(?=.*[A-Za-zА-Яа-я0-9])[A-Za-zА-Яа-я0-9 ]{7,100}(?<=\S)$/
+    if (!titleRegex.test(title)) {
+      this.isTitleValid = false;
+      throw new Error('The title may only contain characters from the Latin or Cyrillic alphabet, as well as numbers. The title must be between 7 and 100 characters long. The title must not begin or end with a space.');
+    } else {
+      this.isTitleValid = true;
     }
   }
 }

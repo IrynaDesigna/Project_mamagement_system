@@ -1,0 +1,44 @@
+@import './../../../sass/_variables'
+@import './../../../sass/_mixins'
+
+.actions
+  @include my-flexbox(flex-start, center)
+  margin: 50px 0 20px
+
+
+.column-create-btn
+  @include btn($green, $yellow)
+  margin-right: 20px
+
+.del-board-btn
+  @include btn(red, $yellow)
+
+.column-container
+  @include my-flexbox()
+  flex-wrap: wrap
+
+
+.column
+  border-radius: 5px
+  border: 1px solid $primary
+  width: 48%
+  margin: 10px 0
+  &:not(&:nth-child(2n))
+    margin-right: 4%
+  .btn
+    &:hover
+      color: $green
+    &:not(&:last-child)
+      margin-right: 10px
+
+.title-wrapper, .column-actions
+  @include my-flexbox()
+
+.title-wrapper
+  background: $primary
+  color: #fff
+  padding: 10px
+
+
+.task-list
+  padding: 10px

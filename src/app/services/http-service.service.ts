@@ -8,9 +8,11 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HttpServiceService {
   localStorage = window.localStorage;
+  tokenValue: string = this.cookieService.get("token").split('=')[0].split(',')[0];
+
   private baseUrl = 'http://localhost:3000';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private userHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.cookieService.get("token")}`);
+  private userHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.tokenValue}`);
 
 
 

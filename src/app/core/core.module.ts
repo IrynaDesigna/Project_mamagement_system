@@ -8,6 +8,7 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
 import { PopupComponent } from './popups/popup/popup.component';
 import { ConfirmationWindowComponent } from './popups/confirmation-window/confirmation-window.component';
 import { NewBoardComponent } from './popups/new-board/new-board.component';
+import { CreateColumnComponent } from './popups/create-column/create-column.component';
 
 
 @NgModule({
@@ -18,14 +19,16 @@ import { NewBoardComponent } from './popups/new-board/new-board.component';
     EditProfileComponent,
     PopupComponent,
     ConfirmationWindowComponent,
-    NewBoardComponent
+    NewBoardComponent,
+    CreateColumnComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     PopupComponent,
     ConfirmationWindowComponent,
-    NewBoardComponent
+    NewBoardComponent,
+    CreateColumnComponent
   ],
   imports: [
     CommonModule,

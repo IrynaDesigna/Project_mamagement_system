@@ -1,1 +1,42 @@
-<p>board works!</p>
+<div class="actions" *ngIf="selectedLanguage === 'en'">
+  <div class="column-create-btn btn" (click)="onColumnCreate($event)">Create a Column</div>
+  <div class="del-board-btn btn" (click)="onDeleteBoard($event)">Delete this Board</div>
+</div>
+<div class="actions" *ngIf="selectedLanguage === 'ru'">
+  <div class="column-create-btn btn" (click)="onColumnCreate($event)">Создать список дел</div>
+  <div class="del-board-btn btn" (click)="onDeleteBoard($event)">Удалить текущийплан</div>
+</div>
+
+<ul class="column-container">
+  <li class="column" *ngFor="let columnTitle of columnTitles; let i = index" [id]="columnIds[i]">
+    <div class="title-wrapper">
+      <h3>{{ columnTitles[i] }}</h3>
+      <div class="column-actions">
+        <div class="btn"><i class="fa-solid fa-plus"></i></div>
+        <div class="btn"><i class="fa-solid fa-pen-to-square"></i></div>
+        <div class="btn" (click)="onColumnDelete(columnIds[i])"><i class="fa-solid fa-trash"></i></div>
+      </div>
+    </div>
+
+    <ul class="task-list">
+      <li class="taks"  *ngFor="let taskTitle of taskTitles; let i = index">
+        <label for=""></label>
+        <input type="checkbox" name="task" id="">
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<app-popup
+  *ngIf="shouldShowPopup && !shouldClosePopup "
+  [popupText]="popupText"
+  (closePopup)="onPopupClose()">
+</app-popup>
+
+<app-create-column
+  *ngIf="shouldShowCreateColumn"
+  (createClick)="onCreateClick($event)"
+  (closeClick)="onCloseClick()"
+  [errorText]="popupText"
+  >
+</app-create-column>

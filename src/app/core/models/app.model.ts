@@ -21,7 +21,8 @@ export interface Board {
 }
 
 export interface Column {
-  _id:	string,
+  map(arg0: (column: any) => { id: any; title: any; order: any; }): unknown;
+  _id?:	string,
   title:	string,
   order:	number,
   boardId:	string

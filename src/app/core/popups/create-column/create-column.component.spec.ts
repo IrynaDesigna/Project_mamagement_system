@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardPageComponent } from './board-page.component';
+import { CreateColumnComponent } from './create-column.component';
 
-describe('BoardPageComponent', () => {
-  let component: BoardPageComponent;
-  let fixture: ComponentFixture<BoardPageComponent>;
+describe('CreateColumnComponent', () => {
+  let component: CreateColumnComponent;
+  let fixture: ComponentFixture<CreateColumnComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BoardPageComponent ]
+      declarations: [ CreateColumnComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BoardPageComponent);
+    fixture = TestBed.createComponent(CreateColumnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

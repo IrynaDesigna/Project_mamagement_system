@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -6,13 +6,15 @@ import { User, DecodedToken } from '../core/models/app.model';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService, CookieOptions } from 'ngx-cookie-service';
+import { catchError, finalize } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit {
+export class AuthService {
   private apiUrl = 'http://localhost:3000/auth';
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
@@ -42,7 +44,7 @@ export class AuthService implements OnInit {
     return this.currentUserSubject.value;
   }
 
-  ngOnInit() {
+  checkIfTokenExpired(): void {
     const isCookieExpired = this.cookieService.check('token') && this.cookieService.get('token') === '';
     if (isCookieExpired) {
       this.logout();
@@ -56,9 +58,8 @@ export class AuthService implements OnInit {
 
 
   setCookie(name: string, exp: number, token: string) {
-    const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + exp);
-    this.cookieService.set(name, token, expirationDate);
+    const expires = new Date(exp);
+    document.cookie = `${name}=${token}, expires=${expires}`;
   }
 
   login(login: string, password: string): Observable<any> {
@@ -69,12 +70,13 @@ export class AuthService implements OnInit {
     return this.http.post<any>(`${this.apiUrl}/signin`, body)
       .pipe(
         tap((user: User) => {
+
           if (user.token) {
             this.decodedToken = JSON.parse(atob(user.token.split('.')[1]));
 
-            this.setCookie( 'token', this.decodedToken.exp/1000, user.token );
-            this.setCookie( 'userId', this.decodedToken.exp/1000, this.decodedToken.id );
-            this.setCookie( 'userLogin', this.decodedToken.exp/1000, this.decodedToken.login );
+            this.setCookie( 'token', this.decodedToken.exp * 1000, user.token );
+            this.setCookie( 'userId', this.decodedToken.exp * 1000, this.decodedToken.id );
+            this.setCookie( 'userLogin', this.decodedToken.exp * 1000, this.decodedToken.login );
           };
 
           this.userService.getUser(login);
@@ -82,6 +84,16 @@ export class AuthService implements OnInit {
           localStorage.setItem('checkingValue', password);
           this.currentUserSubject.next(user);
           this.setIsLoggedIn(true);
+
+        }),
+        catchError(err => {
+          return throwError(err);
+        }),
+        finalize(() => {
+          // setTimeout(() => {
+          //   this.router.navigate(['/main']);
+          // }, 2000);
+          this.router.navigate(['/main']);
         })
       );
   }
