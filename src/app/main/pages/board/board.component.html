@@ -19,9 +19,16 @@
     </div>
 
     <ul class="task-list">
-      <li class="taks"  *ngFor="let taskId of taskIds[columnIds[i]]; let j = index">
-        <input type="checkbox" name="task" [id]="taskId">
-        <label [for]="taskId">>{{ taskTitles[columnIds[i]][j] }}</label>
+      <li class="taks"  *ngFor="let taskId of taskIds[columnIds[i]]; let j = index" ngx-draggable>
+        <div class="task-title-cover">
+          <input type="checkbox" name="task" [id]="pointId[taskId]" [checked]="taskStatus[taskId]" (change)="onCheckboxChange(taskTitles[columnIds[i]][j], pointId[taskId], taskStatus[taskId], $event)">
+          <label [for]="pointId[taskId]">{{ taskTitles[columnIds[i]][j] }}</label>
+          <!-- <div></div> -->
+        </div>
+        <div class="column-actions">
+          <div class="btn"><i class="fa-solid fa-pen-to-square"></i></div>
+          <div class="btn"><i class="fa-solid fa-trash"></i></div>
+        </div>
       </li>
     </ul>
   </li>

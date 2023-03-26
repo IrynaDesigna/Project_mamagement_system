@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpServiceService } from './http-service.service';
-import { Board, Column, Task } from '../core/models/app.model';
+import { Board, Column, Task, Point } from '../core/models/app.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -43,6 +43,21 @@ export class BoardsService {
   createTask(boardId: string, columnId: string, body: Task) {
     const url = `/boards/${boardId}/columns/${columnId}/tasks`;
     return this.httpService.post(url,body);
+  }
+
+  postPoint(body: Point){
+    const url = `/points`;
+    return this.httpService.post(url,body);
+  }
+
+  getPointByTaskId(taskId: string) {
+    const url = `/points/${taskId}`;
+    return this.httpService.get(url);
+  }
+
+  pointCheckChange(pointId: string, body: Point) {
+    const url = `/points/${pointId}`;
+    return this.httpService.patch(url,body);
   }
 
 }

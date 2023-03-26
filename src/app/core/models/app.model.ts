@@ -46,10 +46,10 @@ export interface File {
 }
 
 export interface Point {
-  _id:	string,
+  _id?:	string,
   title:	string,
-  taskId:	number,
-  boardId:	string,
+  taskId?:	number,
+  boardId?:	string,
   done:	boolean
 }
 
@@ -60,4 +60,12 @@ export interface ErrorResponse {
 
 export interface ObjectWithArraysOfStrings {
   [key: string]: string[];
+}
+
+export interface ObjectWithStrings {
+  [key: string]: string;
+}
+
+export interface ObjectWithBoolean {
+  [key: string]: boolean;
 }

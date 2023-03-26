@@ -37,4 +37,8 @@ export class HttpServiceService {
   public put(url: string, body: any, options?: any): Observable<any> {
     return this.http.put(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options })
   }
+
+  public patch(url: string, body: any, options?: any): Observable<any> {
+    return this.http.patch(`${this.baseUrl}${url}`, body, { headers: this.userHeaders, ...options })
+  }
 }

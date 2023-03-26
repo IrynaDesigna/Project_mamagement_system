@@ -5,7 +5,7 @@ import { InputValidationService } from 'src/app/services/input-validation.servic
 import { BoardsService } from 'src/app/services/boards.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { ObjectWithArraysOfStrings } from 'src/app/core/models/app.model';
+import { ObjectWithArraysOfStrings, ObjectWithStrings, ObjectWithBoolean } from 'src/app/core/models/app.model';
 
 @Component({
   selector: 'app-board',
@@ -30,6 +30,8 @@ export class BoardComponent implements OnInit {
   columnIds: string[] = [];
   taskTitles: ObjectWithArraysOfStrings = {};
   taskIds: ObjectWithArraysOfStrings = {};
+  pointId: ObjectWithStrings = {};
+  taskStatus: ObjectWithBoolean = {};
 
   constructor(
     private languageService: LanguageService,
@@ -83,8 +85,6 @@ export class BoardComponent implements OnInit {
   onCloseClick() { this.shouldShowCreateColumn = false; }
 
   onCreateClick(title: string) {
-    console.log(title);
-
     const body = {
       title: '',
       order: (this.boardLength + 1).toString()
@@ -169,7 +169,7 @@ export class BoardComponent implements OnInit {
       error: (err) => {console.log(err);}
     });
 
-    const body = {
+    const taskBody = {
       title: title,
       order: this.boardLength + 1,
       description: title,
@@ -177,11 +177,33 @@ export class BoardComponent implements OnInit {
       users: [this.userId]
     };
 
-    this.boardsService.createTask(this.boardId, this.columnId, body).subscribe({
-      next: (res) => { console.log(res);
+    this.boardsService.createTask(this.boardId, this.columnId, taskBody).subscribe({
+      next: (task) => {
+        console.log(task);
+        const pointBody = {
+          title: title,
+          taskId: task._id,
+          boardId: this.boardId,
+          done: false
+        }
+
+        this.boardsService.postPoint(pointBody).subscribe({
+          next: (point) => {
+            console.log(point);
+          },
+          error: (err) => {
+            console.log(err);
+
+          }
+        })
+
        },
       error: (err) => { console.log(err);}
     })
+
+
+
+
 
     this.boardLoading();
   }
@@ -192,13 +214,27 @@ export class BoardComponent implements OnInit {
         const tasks = res.map(task => ({id: task._id, title: task.title}));
 
         if (columnId !== undefined) {
-          this.taskTitles[columnId] = tasks.map(column => column.title);
-          this.taskIds[columnId] = tasks.map(column => column.id || '');
+          this.taskTitles[columnId] = tasks.map(task => task.title);
+          this.taskIds[columnId] = tasks.map(task => task.id || '');
+
+          tasks.map(task => {
+            if (typeof task.id === 'string') {
+              const taskId = task.id;
+              this.boardsService.getPointByTaskId(task.id).subscribe({
+                next: (points) => {
+                  this.taskStatus[taskId] = points[0].done;
+                  this.pointId[taskId] = points[0]._id;;
+                },
+                error: (err) => {
+                  console.log(err);
+                }
+              });
+            }
+          })
         }
       },
       error: (err) => {console.log(err);}
     });
-
   }
 
   onCloseTaskCreator() {
@@ -209,5 +245,17 @@ export class BoardComponent implements OnInit {
   onTaskCreate(columnId: string) {
     this.columnId = columnId;
     this.shouldShowCreateTask = true;
+  }
+
+  onCheckboxChange(title: string, pointId: string, taskStatus: boolean, event: Event) {
+    const pointBody = {
+      title: title,
+      done: !taskStatus
+    }
+    this.boardsService.pointCheckChange(pointId,pointBody).subscribe({
+      next: (res) => {console.log(res); },
+      error: (err) => {console.log(err); }
+    })
+
   }
 }

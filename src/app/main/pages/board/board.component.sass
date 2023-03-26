@@ -43,6 +43,43 @@
   color: #fff
   padding: 10px
 
+.taks
+  @include my-flexbox()
+  position: relative
+  margin-bottom: 6px
+  .btn
+    color: $primary
+  &:not(&:last-child)::after
+    content: ""
+    position: absolute
+    bottom: -3px
+    left: 0
+    height: 1px
+    width: 100%
+    background: $primary
+
+[type="checkbox"]
+  display: none
+  & ~ label
+    position: relative
+    margin-left: 16px
+    &::before
+      content: ''
+      position: absolute
+      bottom: 4px
+      left: -18px
+      width: 8px
+      height: 8px
+      border-radius: 50%
+      border: 2px solid $primary
+  &:checked ~ label
+    text-decoration: line-through
+    &::before
+      background: $primary
+
+.task-title-cover
+  @include my-flexbox(space-between, flex-start)
+
 
 .task-list
   padding: 10px
