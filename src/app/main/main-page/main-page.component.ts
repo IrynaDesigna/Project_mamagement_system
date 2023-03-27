@@ -22,7 +22,13 @@ export class MainPageComponent implements OnInit {
     private boardsService: BoardsService,
     private cookieService: CookieService,
     private httpService: HttpServiceService
-    ) {}
+    ) {
+      this.userId = this.cookieService.get('userId')
+      if (this.userId) {
+        this.getBoards(this.userId);
+      }
+
+    }
 
   ngOnInit() {
     this.userId = this.cookieService.get('userId')
