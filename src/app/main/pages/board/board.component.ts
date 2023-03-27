@@ -1,12 +1,11 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import { LanguageService } from '../../../services/language.service';
 import { InputValidationService } from 'src/app/services/input-validation.service';
 import { BoardsService } from 'src/app/services/boards.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { ObjectWithArraysOfStrings, ObjectWithStrings, ObjectWithBoolean } from 'src/app/core/models/app.model';
+import { ObjectWithArraysOfStrings, ObjectWithStrings, ObjectWithBoolean, Task } from 'src/app/core/models/app.model';
 
 @Component({
   selector: 'app-board',
@@ -265,9 +264,36 @@ export class BoardComponent implements OnInit {
       element = element.parentElement;
     }
     this.columnId = element?.id ?? '';
-    this.onCreateTaskClick(taskTitle);
+    // this.onCreateTaskClick(taskTitle);
 
-    this.deleteTask(columnId, taskId, pointId);
+    // this.deleteTask(columnId, taskId, pointId);
+
+    this.updateTask(columnId, taskId);
+  }
+
+  updateTask(columnId: string, taskId: string) {
+
+    let body = {
+        title: "",
+        order: 0,
+        description: "description",
+        columnId: this.columnId,
+        userId: this.userId,
+        users: [this.userId]
+    };
+
+    this.boardsService.getTaskById(this.boardId,columnId,taskId).subscribe({
+      next: (task) => {
+        body.order = task.order;
+        body.title = task.title;
+      },
+      complete: () => {
+        this.boardsService.taskPut(this.boardId,columnId,taskId,body).subscribe({});
+        this.boardLoading();
+      }
+    })
+
+
   }
 
   deleteTask(columnId: string, taskId: string, pointId: string) {
@@ -276,5 +302,9 @@ export class BoardComponent implements OnInit {
         this.boardLoading();
       }
     })
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
   }
 }

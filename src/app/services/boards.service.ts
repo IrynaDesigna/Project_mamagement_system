@@ -70,4 +70,14 @@ export class BoardsService {
     return this.httpService.delete(url);
   }
 
+  getTaskById(boardId: string, columnId: string, taskId: string) {
+    const url = `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`;
+    return this.httpService.get(url);
+  }
+
+  taskPut(boardId: string, columnId: string, taskId: string, body: Task) {
+    const url = `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`;
+    return this.httpService.put(url,body);
+  }
+
 }

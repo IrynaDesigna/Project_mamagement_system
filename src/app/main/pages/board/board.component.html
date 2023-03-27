@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <ul class="task-list">
+    <ul class="task-list" (dragover)="onDragOver($event)">
       <li class="taks" *ngFor="let taskId of taskIds[columnIds[i]]; let j = index" [id]="taskId" draggable="true" (dragstart)="onTaskDragStart($event)" [attr.data-task-title]="taskTitles[columnIds[i]][j]">
         <div class="task-title-cover">
           <input type="checkbox" name="task" [id]="pointId[taskId]" [checked]="taskStatus[taskId]" (change)="onCheckboxChange(taskTitles[columnIds[i]][j], pointId[taskId], taskStatus[taskId], $event)">
