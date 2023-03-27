@@ -114,6 +114,7 @@ export class BoardComponent implements OnInit {
         error: (err) => { console.log(err); },
         complete: () => {
           this.boardLoading();
+          this.popupText = '';
           this.shouldShowCreateColumn = false;
         }
       });

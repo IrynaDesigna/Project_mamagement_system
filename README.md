@@ -1,3 +1,29 @@
+# irynadesigna-JSFEEN2022Q3
+
+1. Task: https://github.com/rolling-scopes-school/js-fe-course-en/blob/main/tasks/angular/project-management-system.md
+2. Screenshot :
+![](screenshots/drag-and-drop.png)
+![](screenshots/main-user.png.png)
+![](screenshots/user-edit-page.png.png)
+![](screenshots/ru-en.png.png)
+
+
+3. Deployment: 
+- https://github.com/IrynaDesigna/Project_mamagement_system
+4. Done: 03/26/23 / Deadline: 03/27/23
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ProjectManagementApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
