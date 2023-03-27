@@ -11,7 +11,7 @@ export class HttpServiceService {
   localStorage = window.localStorage;
   tokenValue: string = this.cookieService.get("token").split('=')[0].split(',')[0];
 
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'https://finalproject-backend-production.up.railway.app';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   private userHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.tokenValue}`);
 
