@@ -1,10 +1,13 @@
 # irynadesigna-JSFEEN2022Q3
 
 1. Task: https://github.com/rolling-scopes-school/js-fe-course-en/blob/main/tasks/angular/project-management-system.md
-2. Screenshot :
+2. Screenshot : 
 ![](screenshots/drag-and-drop.png)
+Screenshot : 
 ![](screenshots/main-user.png.png)
+Screenshot : 
 ![](screenshots/user-edit-page.png.png)
+Screenshot : 
 ![](screenshots/ru-en.png.png)
 
 
