@@ -8,15 +8,6 @@
 - https://github.com/IrynaDesigna/Project_mamagement_system
 4. Done: 03/26/23 / Deadline: 03/27/23
 
-5. Screenshot : 
-![](screenshots/main-user.png.png)
-6. Screenshot : 
-![](screenshots/user-edit-page.png.png)
-7. Screenshot : 
-![](screenshots/ru-en.png.png)
-
-
-
 
 
 
