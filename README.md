@@ -4,12 +4,17 @@
 2. Screenshot : 
 ![](screenshots/drag-and-drop.png)
 
-3. Deployment: 
+3. ### Project Development Files and commits: 
 - https://github.com/IrynaDesigna/Project_mamagement_system
+
+### Backend Deployment: 
+- finalproject-backend-production.up.railway.app
+
+
 4. Done: 03/26/23 / Deadline: 03/27/23
 
-5. I didn't upload back-end, baseUrl can be changed in src/app/services/http-service.service.ts
-  private baseUrl = 'http://localhost:3000';
+5. To change backend link: src/app/services/http-service.service.ts
+  - private baseUrl = 'finalproject-backend-production.up.railway.app';
 
 
 
