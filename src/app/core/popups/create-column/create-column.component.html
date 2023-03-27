@@ -3,18 +3,18 @@
   <h2 *ngIf="selectedLanguage === 'ru'">Создать список</h2>
 
 
-  <form action=""  *ngIf="selectedLanguage === 'en'">
+  <form (ngSubmit)="onCreateClick(columnTitle)" *ngIf="selectedLanguage === 'en'">
     <label for="column-title">Enter the column title</label>
     <input [(ngModel)]="columnTitle" name="column-title">
     <div class="err">{{ errorText }}</div>
-    <button (click)="onCreateClick(columnTitle)" class="column-create-btn">Create</button>
+    <button type="submit" class="column-create-btn">Create</button>
   </form>
 
-  <form action=""  *ngIf="selectedLanguage === 'ru'">
+  <form (ngSubmit)="onCreateClick(columnTitle)" *ngIf="selectedLanguage === 'ru'">
     <label for="column-title">Введите навание списка</label>
     <input type="text" [(ngModel)]="columnTitle" name="column-title">
     <div class="err">{{ errorText }}</div>
-    <button (click)="onCreateClick(columnTitle)" class="column-create-btn">Создать</button>
+    <button type="submit" class="column-create-btn">Создать</button>
   </form>
 
   <div class="close-btn" *ngIf="selectedLanguage === 'en'" (click)="onCloseClick()">Close</div>

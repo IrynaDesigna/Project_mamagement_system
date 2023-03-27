@@ -21,17 +21,23 @@ export class BoardComponent implements OnInit {
   boardData: any;
   popupText!: string;
   columnId!: string;
+  taskId!: string;
+  pointId!: string;
   shouldShowCreateTask = false;
+  shouldShowEditTask = false;
   shouldDeleteConfirm = false;
   shouldClosePopup = false;
   shouldShowPopup = false;
   shouldShowCreateColumn = false;
+  shouldShowEditColumn = false;
   columnTitles: string[] = [];
   columnIds: string[] = [];
   taskTitles: ObjectWithArraysOfStrings = {};
   taskIds: ObjectWithArraysOfStrings = {};
-  pointId: ObjectWithStrings = {};
+  pointIds: ObjectWithStrings = {};
   taskStatus: ObjectWithBoolean = {};
+  confirmId!: string;
+  confirmAction: string = '';
 
   constructor(
     private languageService: LanguageService,
@@ -82,6 +88,7 @@ export class BoardComponent implements OnInit {
 
   onCloseConfirmWindow() {
     this.shouldDeleteConfirm = false;
+    this.confirmAction = '';
   }
 
   onCloseClick() { this.shouldShowCreateColumn = false; }
@@ -114,6 +121,7 @@ export class BoardComponent implements OnInit {
   }
 
   onDeleteBoard(event: Event) {
+    this.confirmAction = 'deleteBoard';
     if (this.selectedLanguage === 'en') {
       this.popupText = `Do you want to delete current board?`;
     } else {
@@ -140,6 +148,7 @@ export class BoardComponent implements OnInit {
   onColumnCreate(event: Event){ this.shouldShowCreateColumn = true; }
 
   onColumnDelete(columnId: string, title: string) {
+    this.confirmAction = 'deleteColumn';
     this.columnId = columnId;
     if (this.selectedLanguage === 'en') {
       this.popupText = `Do you want to delete ${title}?`;
@@ -214,7 +223,7 @@ export class BoardComponent implements OnInit {
                 next: (points) => {
                   if (points[0] !== undefined ) {
                     this.taskStatus[taskId] = points[0].done;
-                    this.pointId[taskId] = points[0]._id;
+                    this.pointIds[taskId] = points[0]._id;
                   }
                 }, error: (err) => { console.log(err); }
               });
@@ -264,15 +273,62 @@ export class BoardComponent implements OnInit {
       element = element.parentElement;
     }
     this.columnId = element?.id ?? '';
-    // this.onCreateTaskClick(taskTitle);
-
-    // this.deleteTask(columnId, taskId, pointId);
-
     this.updateTask(columnId, taskId);
   }
 
-  updateTask(columnId: string, taskId: string) {
+  onColumnEdit(columnId: string){
+    this.columnId = columnId;
+    // this.taskId = taskId;
+    this.shouldShowEditColumn = true
+  }
 
+  columnEdit(title: string){
+    const body = {
+      title: title,
+      order: 0
+    }
+    this.boardsService.columnPut(this.boardId,this.columnId,body).subscribe({});
+    this.shouldShowEditColumn = false;
+    this.boardLoading();
+  }
+
+  onConfirm(action: string) {
+    if (this.confirmAction === 'deleteBoard') {
+      if (action === 'confirm') {
+        this.onDeleteBoardConfirm();
+      }
+    } else if (this.confirmAction === 'deleteColumn') {
+      if (action === 'confirm') {
+        this.onDeleteColumnConfirm();
+      }
+    } else if (this.confirmAction === 'deleteTask') {
+      if (action === 'confirm') {
+        this.onDeleteTaskConfirm();
+      }
+    }
+  }
+
+  onTaskEdit(columnId: string, taskId: string){
+    this.columnId = columnId;
+    this.taskId = taskId;
+    this.shouldShowEditTask = true
+  }
+
+  taskEdit(title: string) {
+    let body = {
+      title: title,
+      order: 0,
+      description: "description",
+      columnId: this.columnId,
+      userId: this.userId,
+      users: [this.userId]
+    };
+    this.boardsService.taskPut(this.boardId,this.columnId,this.taskId,body).subscribe({});
+    this.shouldShowEditTask = false;
+    this.boardLoading();
+  }
+
+  updateTask(columnId: string, taskId: string) {
     let body = {
         title: "",
         order: 0,
@@ -292,16 +348,32 @@ export class BoardComponent implements OnInit {
         this.boardLoading();
       }
     })
-
-
   }
 
-  deleteTask(columnId: string, taskId: string, pointId: string) {
-    this.boardsService.deleteTask(this.boardId,columnId,taskId).subscribe({
+  deleteTask(columnId: string, taskId: string, pointId: string, title: string) {
+    this.columnId = columnId;
+    this.taskId = taskId;
+    this.pointId = pointId;
+    this.confirmAction = 'deleteTask';
+
+    if (this.selectedLanguage === 'en') {
+      this.popupText = `Do you want to delete ${title} from the column?`;
+    } else {
+      this.popupText = `Вы хотите удалить ${title} из списка?`;
+    };
+    this.shouldDeleteConfirm = true;
+  }
+
+  onDeleteTaskConfirm() {
+    this.shouldDeleteConfirm = false;
+
+    this.boardsService.deleteTask(this.boardId,this.columnId,this.taskId).subscribe({
       complete: () => {
         this.boardLoading();
       }
     })
+
+    this.boardsService.deletePoint(this.pointId);
   }
 
   onDragOver(event: DragEvent) {

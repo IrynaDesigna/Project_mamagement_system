@@ -19,8 +19,6 @@ export class TaskCreatorComponent {
     });
   }
 
-
-
   onCreateTaskClick(title: string) {
     this.createTaskClick.emit(title);
   }
@@ -28,6 +26,4 @@ export class TaskCreatorComponent {
   onCloseTaskCreator() {
     this.closeTaskCreator.emit();
   }
-
-
 }

@@ -30,6 +30,11 @@ export class BoardsService {
     return this.httpService.post(url,body);
   }
 
+  columnPut(boardId: string, columnId: string, body: {}) {
+    const url = `/boards/${boardId}/columns/${columnId}`;
+    return this.httpService.put(url,body);
+  }
+
   getTasksbyColumn(boardId: string, columnId: string): Observable<Task[]>{
     const url = `/boards/${boardId}/columns/${columnId}/tasks`;
     return this.httpService.get(url);
@@ -65,7 +70,7 @@ export class BoardsService {
     return this.httpService.delete(url);
   }
 
-  deletePoint(pointId: string, body: Point){
+  deletePoint(pointId: string){
     const url = `/points/${pointId}`;
     return this.httpService.delete(url);
   }

@@ -13,7 +13,7 @@
       <h3>{{ columnTitles[i] }}</h3>
       <div class="column-actions">
         <div class="btn" (click)="onTaskCreate(columnIds[i])"><i class="fa-solid fa-plus"></i></div>
-        <div class="btn"><i class="fa-solid fa-pen-to-square"></i></div>
+        <div class="btn" (click)="onColumnEdit(columnIds[i])"><i class="fa-solid fa-pen-to-square"></i></div>
         <div class="btn" (click)="onColumnDelete(columnIds[i],columnTitles[i])"><i class="fa-solid fa-trash"></i></div>
       </div>
     </div>
@@ -21,13 +21,13 @@
     <ul class="task-list" (dragover)="onDragOver($event)">
       <li class="taks" *ngFor="let taskId of taskIds[columnIds[i]]; let j = index" [id]="taskId" draggable="true" (dragstart)="onTaskDragStart($event)" [attr.data-task-title]="taskTitles[columnIds[i]][j]">
         <div class="task-title-cover">
-          <input type="checkbox" name="task" [id]="pointId[taskId]" [checked]="taskStatus[taskId]" (change)="onCheckboxChange(taskTitles[columnIds[i]][j], pointId[taskId], taskStatus[taskId], $event)">
-          <label [for]="pointId[taskId]">{{ taskTitles[columnIds[i]][j] }}</label>
+          <input type="checkbox" name="task" [id]="pointIds[taskId]" [checked]="taskStatus[taskId]" (change)="onCheckboxChange(taskTitles[columnIds[i]][j], pointIds[taskId], taskStatus[taskId], $event)">
+          <label [for]="pointIds[taskId]">{{ taskTitles[columnIds[i]][j] }}</label>
           <!-- <div></div> -->
         </div>
         <div class="column-actions">
-          <div class="btn"><i class="fa-solid fa-pen-to-square"></i></div>
-          <div class="btn" (click)="deleteTask(columnIds[i],taskId,pointId[taskId])"><i class="fa-solid fa-trash"></i></div>
+          <div class="btn" (click)="onTaskEdit(columnIds[i],taskId)"><i class="fa-solid fa-pen-to-square"></i></div>
+          <div class="btn" (click)="deleteTask(columnIds[i],taskId,pointIds[taskId],taskTitles[columnIds[i]][j])"><i class="fa-solid fa-trash"></i></div>
         </div>
       </li>
     </ul>
@@ -48,29 +48,43 @@
   >
 </app-create-column>
 
+<app-create-column
+  *ngIf="shouldShowEditColumn"
+  (createClick)="columnEdit($event)"
+  (closeClick)="onCloseClick()"
+  [errorText]="popupText"
+  >
+</app-create-column>
+
 <app-task-creator
 *ngIf="shouldShowCreateTask"
 (createTaskClick)="onCreateTaskClick($event)"
 (closeTaskCreator)="onCloseTaskCreator()"
 ></app-task-creator>
 
+<app-task-creator
+  *ngIf="shouldShowEditTask"
+  (closeTaskCreator)="onCloseTaskCreator()"
+  (createTaskClick)="taskEdit($event)"
+></app-task-creator>
+
 <app-confirmation-window
-  *ngIf="shouldDeleteConfirm"
+  *ngIf="shouldDeleteConfirm && confirmAction === 'deleteBoard'"
   [deleteConfirm]="popupText"
   (closeConfirmWindow)="onCloseConfirmWindow()"
-  (actionConfirm)="onDeleteBoardConfirm()">
+  (actionConfirm)="onConfirm('confirm')">
 </app-confirmation-window>
 
 <app-confirmation-window
-  *ngIf="shouldDeleteConfirm"
+  *ngIf="shouldDeleteConfirm && confirmAction === 'deleteColumn'"
   [deleteConfirm]="popupText"
   (closeConfirmWindow)="onCloseConfirmWindow()"
-  (actionConfirm)="onDeleteColumnConfirm()">
+  (actionConfirm)="onConfirm('confirm')">
 </app-confirmation-window>
 
-<!-- <app-confirmation-window
-  *ngIf="shouldDeleteConfirm"
+<app-confirmation-window
+  *ngIf="shouldDeleteConfirm && confirmAction === 'deleteTask'"
   [deleteConfirm]="popupText"
   (closeConfirmWindow)="onCloseConfirmWindow()"
-  (actionConfirm)="onDeleteBoardConfirm()">
-</app-confirmation-window> -->
+  (actionConfirm)="onConfirm('confirm')">
+</app-confirmation-window>
