@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import { LanguageService } from '../../../services/language.service';
 import { InputValidationService } from 'src/app/services/input-validation.service';
@@ -39,7 +40,9 @@ export class BoardComponent implements OnInit {
     private boardsService: BoardsService,
     private router: Router,
     public inputValidationService: InputValidationService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private renderer: Renderer2,
+    private el: ElementRef
     ) {
       this.languageService.language$.subscribe((language) => {
         this.selectedLanguage = language;
@@ -179,7 +182,6 @@ export class BoardComponent implements OnInit {
 
     this.boardsService.createTask(this.boardId, this.columnId, taskBody).subscribe({
       next: (task) => {
-        console.log(task);
         const pointBody = {
           title: title,
           taskId: task._id,
@@ -188,23 +190,12 @@ export class BoardComponent implements OnInit {
         }
 
         this.boardsService.postPoint(pointBody).subscribe({
-          next: (point) => {
-            console.log(point);
-          },
-          error: (err) => {
-            console.log(err);
-
-          }
+          error: (err) => {console.log(err);}
         })
 
        },
       error: (err) => { console.log(err);}
     })
-
-
-
-
-
     this.boardLoading();
   }
 
@@ -222,12 +213,11 @@ export class BoardComponent implements OnInit {
               const taskId = task.id;
               this.boardsService.getPointByTaskId(task.id).subscribe({
                 next: (points) => {
-                  this.taskStatus[taskId] = points[0].done;
-                  this.pointId[taskId] = points[0]._id;;
-                },
-                error: (err) => {
-                  console.log(err);
-                }
+                  if (points[0] !== undefined ) {
+                    this.taskStatus[taskId] = points[0].done;
+                    this.pointId[taskId] = points[0]._id;
+                  }
+                }, error: (err) => { console.log(err); }
               });
             }
           })
@@ -252,10 +242,39 @@ export class BoardComponent implements OnInit {
       title: title,
       done: !taskStatus
     }
-    this.boardsService.pointCheckChange(pointId,pointBody).subscribe({
-      next: (res) => {console.log(res); },
-      error: (err) => {console.log(err); }
-    })
+    this.boardsService.pointCheckChange(pointId,pointBody).subscribe({});
+  }
 
+  onTaskDragStart(event: DragEvent) { }
+
+  onTaskDragEnd(event: DragEvent) {
+    const taskId = (event.target as HTMLElement).id;
+    const columnId = (event.target as HTMLElement).closest('.column')?.id ?? '';
+    const pointId = (event.target as HTMLElement).closest('[type="checkbox"')?.id ?? '';
+
+    const taskTitle: string = (event.target as HTMLElement).getAttribute('data-task-title') ?? '';
+    const x = event.clientX;
+    const y = event.clientY;
+    let element = document.elementFromPoint(x, y);
+
+    while (element != null) {
+      if (element.classList.contains("column")) {
+        const el = element;
+        break;
+      }
+      element = element.parentElement;
+    }
+    this.columnId = element?.id ?? '';
+    this.onCreateTaskClick(taskTitle);
+
+    this.deleteTask(columnId, taskId, pointId);
+  }
+
+  deleteTask(columnId: string, taskId: string, pointId: string) {
+    this.boardsService.deleteTask(this.boardId,columnId,taskId).subscribe({
+      complete: () => {
+        this.boardLoading();
+      }
+    })
   }
 }

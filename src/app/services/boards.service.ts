@@ -60,4 +60,14 @@ export class BoardsService {
     return this.httpService.patch(url,body);
   }
 
+  deleteTask(boardId: string, columnId: string, taskId: string){
+    const url = `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`;
+    return this.httpService.delete(url);
+  }
+
+  deletePoint(pointId: string, body: Point){
+    const url = `/points/${pointId}`;
+    return this.httpService.delete(url);
+  }
+
 }

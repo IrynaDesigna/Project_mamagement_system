@@ -10,7 +10,7 @@ import { MainModule } from './main/main.module';
 import { SinginModule } from './singin/singin.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard';
-import { AuthService } from './services/auth.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { AuthService } from './services/auth.service';
     WelcomeModule,
     MainModule,
     SinginModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [
     AuthGuard,
