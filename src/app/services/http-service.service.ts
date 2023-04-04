@@ -22,8 +22,34 @@ export class HttpServiceService {
     private cookieService: CookieService,
     ) { }
 
+  // public get(url: string, options?: any): Observable<any> {
+  //   console.log(this.tokenValue);
+
+  //   return this.http.get(`${this.baseUrl}${url}`, { headers: this.userHeaders, ...options });
+  // }
+
   public get(url: string, options?: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}${url}`, { headers: this.userHeaders, ...options });
+    const token = this.cookieService.get('token');
+
+    if (token) {
+      this.userHeaders = new HttpHeaders().set('Authorization', `Bearer ${token.split('=')[0].split(',')[0]}`);
+      return this.http.get(`${this.baseUrl}${url}`, { headers: this.userHeaders, ...options });
+    } else {
+      // Wait for token to be available
+      return new Observable((observer) => {
+        const waitToken = () => {
+          const token = this.cookieService.get('token');
+          if (token) {
+            this.userHeaders = new HttpHeaders().set('Authorization', `Bearer ${token.split('=')[0].split(',')[0]}`);
+            observer.next(this.http.get(`${this.baseUrl}${url}`, { headers: this.userHeaders, ...options }));
+          } else {
+            setTimeout(waitToken, 100);
+          }
+        };
+
+        waitToken();
+      });
+    }
   }
 
   public delete(url: string, options?: any): Observable<any> {
