@@ -15,7 +15,7 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl = 'https://finalproject-backend-production.up.railway.app/auth';
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   public isLoggedInSubject: BehaviorSubject<boolean>;
