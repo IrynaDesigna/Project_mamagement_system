@@ -10,6 +10,9 @@
 ### Backend Deployment: 
 - finalproject-backend-production.up.railway.app
 
+### Project Deployment: 
+- https://project-mamagement-system-e7sh.vercel.app/welcome
+
 
 4. Done: 03/26/23 / Deadline: 03/27/23
 
