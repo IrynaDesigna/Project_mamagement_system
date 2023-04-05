@@ -22,8 +22,6 @@ export class MainPageComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    console.log(this.cookieService.get('userId'));
-
     this.userId = this.cookieService.get('userId')
     if (this.userId) {
       this.getBoards(this.userId);
